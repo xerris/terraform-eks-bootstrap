@@ -1,0 +1,61 @@
+anchors:
+  configure-aws-access: &configure-aws-access
+    run:
+      name: Configure AWS access
+      command: |
+        mkdir -p ~/.aws
+        file=~/.aws/credentials
+        echo "[default]" > $file
+        echo "aws_access_key_id = $AWS_ACCESS_KEY_ID" >> $file
+        echo "aws_secret_access_key = $AWS_SECRET_ACCESS_KEY" >> $file
+
+  deploy-infra: &deploy-infra
+    run:
+      name: Deploy terraform platform infra
+      command: |
+        sh ./terraform_exec.sh 1
+
+
+jobs:
+  deployInfra:
+    executor: default
+    steps:
+      - checkout
+      - *configure-aws-access
+      - *deploy-infra
+
+workflows:
+  version: 2
+  devDeploy:
+    jobs:
+      - deployInfra:
+          context: DEV
+
+  stageDeploy:
+    jobs:
+      - deployInfra:
+          context: STAGE
+          filters:
+            branches:
+              only:
+                - main
+  prodDeploy:
+    jobs:
+      - approve-deploy:
+          type: approval
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only:
+                - /^v(\d+\.)?(\d+\.)?(\*|\d+)$/
+      - deployInfra:
+          context: PROD
+          filters:
+            tags:
+              only:
+                - /^v(\d+\.)?(\d+\.)?(\*|\d+)$/
+            branches:
+              ignore: /.*/
+          requires:
+            - approve-deploy
