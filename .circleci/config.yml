@@ -29,12 +29,12 @@ workflows:
   devDeploy:
     jobs:
       - deployInfra:
-          context: DEV
+          context: ISENGARD-DEV
 
   stageDeploy:
     jobs:
       - deployInfra:
-          context: STAGE
+          context: ISENGARD-STAGE
           filters:
             branches:
               only:
@@ -50,7 +50,7 @@ workflows:
               only:
                 - /^v(\d+\.)?(\d+\.)?(\*|\d+)$/
       - deployInfra:
-          context: PROD
+          context: ISENGARD-PROD
           filters:
             tags:
               only:
