@@ -89,8 +89,9 @@ variable "cluster_node_image_id" {
     default = "ami-048f6ed62451373d9"
 }
 variable "cluster_node_disk_size"{
-    default = 200
+    default = "200"
 }
+
 variable "bucket_cluster_logs_name" {
     default = "project_eks_logs"
 }
