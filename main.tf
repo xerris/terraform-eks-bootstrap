@@ -20,10 +20,10 @@ variable "vpc_data"{
         }
     ))
     default = []
-
 }
 
 locals{
+  depends_on = [module.vpc]
   vpc_id = var.create_vpc ? var.vpc_data.id : var.vpc_id
   subnet_ids = var.create_vpc ? var.vpc_data.subnet_ids : var.private_subnets_ids
 }
