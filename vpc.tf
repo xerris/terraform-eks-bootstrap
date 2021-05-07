@@ -33,7 +33,7 @@ module "vpc" {
 
 output "vpc_data" {
     value ={
-        id = module.vpc-aws.vpc_id
-        subnet_ids = module.vpc-aws.private_subnets
+        id = module.vpc.vpc_id
+        subnet_ids = module.vpc.private_subnets
     }
 }

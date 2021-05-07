@@ -10,7 +10,6 @@ provider "kubernetes" {
   host                   = data.aws_eks_cluster.cluster.endpoint
   cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster.certificate_authority.0.data)
   token                  = data.aws_eks_cluster_auth.cluster.token
-  load_config_file       = false
 }
 
 variable "vpc_data"{}
@@ -41,7 +40,7 @@ resource "aws_eks_node_group" "project-eks-cluster-nodegroup" {
   count = length(local.subnet_ids)
   depends_on = [module.project_eks_cluster]
   cluster_name    = "${var.eks_cluster_name}-${var.env}"
-  node_group_name = "node-group-${var.cluster_name}-${local.subnet_ids[count.index].id}"
+  node_group_name = "node-group-${var.eks_cluster_name}-${local.subnet_ids[count.index].id}"
   node_role_arn   = aws_iam_role.eks-autoscale-role.arn
   subnet_ids      = [local.subnet_ids[count.index]]
   instance_types = [var.cluster_node_instance_type]
@@ -68,9 +67,9 @@ resource "aws_eks_node_group" "project-eks-cluster-nodegroup" {
 }
 
 resource "aws_iam_policy" "eks-autoscale-policy" {
-  name        = "${var.cluster_name}-${var.env}-eks-autoscale-policy"
+  name        = "${var.eks_cluster_name}-${var.env}-eks-autoscale-policy"
   path        = "/"
-  description = "${var.cluster_name}-${var.env}-eks-autoscale-policy"
+  description = "${var.eks_cluster_name}-${var.env}-eks-autoscale-policy"
 
   policy = <<EOF
 {
@@ -95,9 +94,9 @@ EOF
 }
 
 resource "aws_iam_policy" "eks-cert-route53-policy" {
-  name        = "${var.cluster_name}-${var.env}-eks-cert-route53-policy"
+  name        = "${var.eks_cluster_name}-${var.env}-eks-cert-route53-policy"
   path        = "/"
-  description = "${var.cluster_name}-${var.env}-eks-cert-route53-policy"
+  description = "${var.eks_cluster_name}-${var.env}-eks-cert-route53-policy"
 
   policy = <<EOF
 {
@@ -124,7 +123,7 @@ EOF
 }
 
 resource "aws_iam_role" "eks-autoscale-role" {
-  name = "${var.cluster_name}-${var.env}-eks-autoscale-role"
+  name = "${var.eks_cluster_name}-${var.env}-eks-autoscale-role"
 
   assume_role_policy = jsonencode({
     Statement = [{
