@@ -17,7 +17,7 @@ AWS_REGION="${AWS_REGION:-us-east-1}"
 #aws configure set role_session_name aldo-test-session --profile aldo-role
 #export AWS_PROFILE=aldo-role
 
-apply=${1:-0} #If set terraform will force apply changes
+APPLY=${1:-0} #If set terraform will force apply changes
 commit_hash=`git rev-parse --short HEAD`
 build_number="${BITBUCKET_BUILD_NUMBER:=local}"
 #export TF_LOG=TRACE
@@ -35,7 +35,7 @@ terraform init \
 terraform validate
 terraform plan -var-file=envs/${ENV}.tfvars
 
-if [ $apply == 1 ]; then
+if [ $APPLY == 1 ]; then
     echo "###############################"
     echo "## Executing terraform apply ##"
     echo "###############################"
