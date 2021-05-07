@@ -12,20 +12,12 @@ provider "kubernetes" {
   token                  = data.aws_eks_cluster_auth.cluster.token
 }
 
-variable "vpc_data"{
-    type = list(object(
-        {
-         id = string
-         subnet_ids = list(string)
-        }
-    ))
-    default = []
-}
+
 
 locals{
   depends_on = [module.vpc]
-  vpc_id = var.create_vpc ? var.vpc_data.id : var.vpc_id
-  subnet_ids = var.create_vpc ? var.vpc_data.subnet_ids : var.private_subnets_ids
+  vpc_id = var.create_vpc ? module.vpc.vpc_data.id : var.vpc_id
+  subnet_ids = var.create_vpc ? module.vpc.vpc_data.subnet_ids : var.private_subnets_ids
 }
 
 module "project_eks_cluster" {
