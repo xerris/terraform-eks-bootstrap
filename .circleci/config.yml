@@ -15,10 +15,9 @@ anchors:
       command: |
         sh ./terraform_exec.sh 1
 
-
 jobs:
   deployInfra:
-    executor: default
+    executor: machine
     steps:
       - checkout
       - *configure-aws-access
