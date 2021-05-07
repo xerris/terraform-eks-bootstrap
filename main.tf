@@ -12,7 +12,16 @@ provider "kubernetes" {
   token                  = data.aws_eks_cluster_auth.cluster.token
 }
 
-variable "vpc_data"{}
+variable "vpc_data"{
+    type = list(object(
+        {
+         id = string
+         subnet_ids = list(string)
+        }
+    ))
+    default = []
+
+}
 
 locals{
   vpc_id = var.create_vpc ? var.vpc_data.id : var.vpc_id
