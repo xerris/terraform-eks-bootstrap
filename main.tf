@@ -46,7 +46,6 @@ resource "aws_eks_node_group" "project-eks-cluster-nodegroup" {
   node_role_arn   = aws_iam_role.eks-autoscale-role.arn
   subnet_ids      = [local.subnet_ids[count.index]]
   instance_types = [var.cluster_node_instance_type]
-  ami_type  = var.cluster_node_image_id
   disk_size = var.cluster_node_disk_size
 
   scaling_config {
