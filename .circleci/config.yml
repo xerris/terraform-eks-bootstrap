@@ -1,6 +1,6 @@
 anchors:
   configure-aws-access: &configure-aws-access
-    run:
+   - run:
       name: Configure AWS access
       command: |
         mkdir -p ~/.aws
@@ -8,6 +8,10 @@ anchors:
         echo "[default]" > $file
         echo "aws_access_key_id = $AWS_ACCESS_KEY_ID" >> $file
         echo "aws_secret_access_key = $AWS_SECRET_ACCESS_KEY" >> $file
+   - run:
+        name: Install terraform
+        command: |
+          sh ./infra/install_terraform.sh
 
   deploy-infra: &deploy-infra
     run:
