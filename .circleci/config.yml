@@ -1,3 +1,4 @@
+version: 2.1
 anchors:
   configure-aws-access: &configure-aws-access
     run:
