@@ -20,6 +20,7 @@ locals{
 }
 
 module "project_eks_cluster" {
+  depends_on = [module.vpc]
   source          = "terraform-aws-modules/eks/aws"
   cluster_name    = "${var.eks_cluster_name}-${var.env}"
   cluster_version = var.eks_cluster_version
