@@ -19,7 +19,7 @@ anchors:
     run:
       name: Install terraform
       command: |
-        sh ./infra/install_terraform.sh
+        sh ./install_terraform.sh
 
 
 jobs:
