@@ -63,6 +63,7 @@ resource "aws_eks_node_group" "project-eks-cluster-nodegroup" {
     Owner       = var.owner_tag
     Environment = var.env
     Terraform   = true
+    "kubernetes.io/cluster/${var.eks_cluster_name}-${var.env}" = "owned"
   }
 
   lifecycle {
