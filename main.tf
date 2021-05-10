@@ -18,6 +18,68 @@ locals{
   depends_on = [module.vpc]
   vpc_id = var.create_vpc ? module.vpc.vpc_id : var.vpc_id
   subnet_ids = var.create_vpc ? module.vpc.private_subnets : var.private_subnets_ids
+  public_subnet_ids = var.create_vpc ? module.vpc.public_subnets : var.public_subnets_ids
+}
+
+resource "tls_private_key" "this" {
+  algorithm = "RSA"
+}
+
+resource "aws_key_pair" "bastion_key_pair" {
+
+  key_name   = "${var.eks_cluster_name}-${var.env}-key-pair"
+  public_key = tls_private_key.this.public_key_openssh
+}
+
+output "private_key" {
+  value = tls_private_key.this.private_key_pem
+  sensitive = true
+
+}
+resource "aws_security_group" "bastion" {
+  name        = "bastion-security-group"
+  description = "Allow SSH traffic"
+  vpc_id = local.vpc_id
+  ingress {
+    description = "SSH"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Owner       = var.owner_tag
+    Environment = var.env
+    Terraform   = true
+  }
+}
+
+
+module "ec2_cluster" {
+  source                 = "terraform-aws-modules/ec2-instance/aws"
+  version                = "~> 2.0"
+  name                   = "bastion"
+  instance_count         = 1
+  ami           = var.cluster_node_image_id
+  instance_type          = "t2.micro"
+  key_name      = aws_key_pair.bastion_key_pair.key_name
+  monitoring             = true
+  vpc_security_group_ids = [aws_security_group.bastion.id]
+  subnet_id              = local.public_subnet_ids[0]
+
+  tags = {
+    Owner       = var.owner_tag
+    Environment = var.env
+    Terraform   = true
+  }
 }
 
 module "project_eks_cluster" {
@@ -45,7 +107,11 @@ module "project_eks_cluster" {
 
 resource "aws_eks_node_group" "project-eks-cluster-nodegroup" {
   count = length(local.subnet_ids)
-  depends_on = [module.project_eks_cluster]
+  depends_on = [module.project_eks_cluster,
+    aws_iam_role_policy_attachment.autoscale-AmazonEKSWorkerNodePolicy,
+    aws_iam_role_policy_attachment.autoscale-AmazonEKS_CNI_Policy,
+    aws_iam_role_policy_attachment.autoscale-AmazonEC2ContainerRegistryReadOnly,
+  ]
   cluster_name    = "${var.eks_cluster_name}-${var.env}"
   node_group_name = "node-group-${var.eks_cluster_name}-${count.index}"
   node_role_arn   = aws_iam_role.eks-autoscale-role.arn
@@ -64,6 +130,9 @@ resource "aws_eks_node_group" "project-eks-cluster-nodegroup" {
     Environment = var.env
     Terraform   = true
     "kubernetes.io/cluster/${var.eks_cluster_name}-${var.env}" = "owned"
+  }
+  remote_access {
+    ec2_ssh_key = aws_key_pair.bastion_key_pair.key_name
   }
 
   lifecycle {

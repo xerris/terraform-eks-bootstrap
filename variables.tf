@@ -18,6 +18,11 @@ variable "private_subnets_ids" {
   type = list
 }
 
+variable "public_subnets_ids" {
+  default = []
+  type = list
+}
+
 variable "region" {
     default = "us-east-1"
 }
