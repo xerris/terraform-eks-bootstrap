@@ -1,4 +1,4 @@
-var "account_id"{
+variable "account_id"{
     default = "471337104212"
 }
 variable "env" {
