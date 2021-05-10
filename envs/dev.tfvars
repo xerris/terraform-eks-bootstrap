@@ -23,3 +23,4 @@ cluster_logs_path = "cluster_logs"
 node_logs_path = "node_logs"
 monthly_billing_threshold = 500
 billing_currency = "USD"
+account_id = "471337104212"
