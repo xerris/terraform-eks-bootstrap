@@ -143,6 +143,10 @@ resource "aws_iam_role" "eks-autoscale-role" {
   })
 }
 
+resource "aws_iam_role_policy_attachment" "autoscale-AmazonEKSClusterPolicy" {
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
+  role       = aws_iam_role.eks-autoscale-role.name
+}
 resource "aws_iam_role_policy_attachment" "autoscale-eks-route53Policy" {
   policy_arn = aws_iam_policy.eks-cert-route53-policy.arn
   role       = aws_iam_role.eks-autoscale-role.name
