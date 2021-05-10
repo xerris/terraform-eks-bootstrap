@@ -27,11 +27,12 @@ module "project_eks_cluster" {
   cluster_version = var.eks_cluster_version
   subnets         = local.subnet_ids
   vpc_id          = local.vpc_id
-  map_roles = {
+  map_roles = [{
     rolearn  = "arn:aws:iam::${var.account_id}:role/aws-service-role/eks.amazonaws.com/AWSServiceRoleForAmazonEKS"
     username = "AWSServiceRoleForAmazonEKS"
     groups   = ["system:masters"]
-  }
+  }]
+
   tags = {
     Owner       = var.owner_tag
     Environment = var.env
