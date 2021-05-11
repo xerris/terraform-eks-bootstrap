@@ -24,3 +24,17 @@ node_logs_path = "node_logs"
 monthly_billing_threshold = 500
 billing_currency = "USD"
 account_id = "471337104212"
+map_roles = [
+  {
+    rolearn  = "arn:aws:iam::471337104212:role/aws-service-role/eks.amazonaws.com/AWSServiceRoleForAmazonEKS"
+    username = "AWSServiceRoleForAmazonEKS"
+    groups   = ["system:masters"]
+  }]
+
+map_users = [
+  {
+    userarn  = "arn:aws:iam::471337104212:user/kubernetes-service-account"
+    username = "kubernetes-service-account"
+    groups   = ["system:masters"]
+  }
+]

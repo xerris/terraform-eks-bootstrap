@@ -19,6 +19,11 @@ locals{
   vpc_id = var.create_vpc ? module.vpc.vpc_id : var.vpc_id
   subnet_ids = var.create_vpc ? module.vpc.private_subnets : var.private_subnets_ids
   public_subnet_ids = var.create_vpc ? module.vpc.public_subnets : var.public_subnets_ids
+  map_role = [{
+    rolearn  =  aws_iam_role.eks-autoscale-role.arn
+    username = "system:node:{{EC2PrivateDNSName}}"
+    groups   = ["system:bootstrappers", "system:nodes"]
+  }]
 }
 
 resource "tls_private_key" "this" {
@@ -74,7 +79,6 @@ module "ec2_cluster" {
   monitoring             = true
   vpc_security_group_ids = [aws_security_group.bastion.id]
   subnet_id              = local.public_subnet_ids[0]
-
   tags = {
     Owner       = var.owner_tag
     Environment = var.env
@@ -89,11 +93,9 @@ module "project_eks_cluster" {
   cluster_version = var.eks_cluster_version
   subnets         = local.subnet_ids
   vpc_id          = local.vpc_id
-  map_roles = [{
-    rolearn  = "arn:aws:iam::${var.account_id}:role/aws-service-role/eks.amazonaws.com/AWSServiceRoleForAmazonEKS"
-    username = "AWSServiceRoleForAmazonEKS"
-    groups   = ["system:masters"]
-  }]
+  map_roles =   concat(var.map_roles, local.map_role)
+  map_users    = var.map_users
+  map_accounts = var.map_accounts
 
   tags = {
     Owner       = var.owner_tag

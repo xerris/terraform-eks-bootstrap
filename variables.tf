@@ -119,3 +119,69 @@ variable "monthly_billing_threshold" {
 variable "billing_currency" {
     default = "USD"
 }
+
+variable "map_accounts" {
+  description = "Additional AWS account numbers to add to the aws-auth configmap."
+  type        = list(string)
+
+  default = []
+}
+
+variable "map_roles" {
+  description = "Additional IAM roles to add to the aws-auth configmap."
+  type = list(object({
+    rolearn  = string
+    username = string
+    groups   = list(string)
+  }))
+
+  default = []
+}
+
+variable "map_users" {
+  description = "Additional IAM users to add to the aws-auth configmap."
+  type = list(object({
+    userarn  = string
+    username = string
+    groups   = list(string)
+  }))
+
+  default = []
+}
+
+variable "role_name" {
+  default = "test_role"
+}
+
+variable "api_groups" {
+  type    = list
+  default = []
+}
+
+variable "resources" {
+  type    = list
+  default = []
+}
+
+variable "resource_names" {
+  type    = list
+  default = []
+}
+
+variable "actions" {
+  type    = list
+  default = []
+}
+
+
+variable "namespace_name" {
+  default = "default"
+}
+
+variable "username" {
+  default = []
+}
+
+variable "dev_users" {
+  default = []
+}
