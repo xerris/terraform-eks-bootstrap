@@ -87,7 +87,12 @@ module "ec2_cluster" {
 }
 
 module "project_eks_cluster" {
-  depends_on = [module.vpc]
+  depends_on = [
+    module.vpc,
+    aws_iam_group_policy_attachment.K8sClusterAdmin-group-policy-attach,
+    aws_iam_group_policy_attachment.K8sFullAdmin-group-policy-attach,
+    aws_iam_group_policy_attachment.K8sDeveloper-group-policy-attach
+    ]
   source          = "terraform-aws-modules/eks/aws"
   cluster_name    = "${var.eks_cluster_name}-${var.env}"
   cluster_version = var.eks_cluster_version
