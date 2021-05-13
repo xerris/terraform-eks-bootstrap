@@ -33,7 +33,7 @@ map_roles = [
 
 map_users = [
   {
-    userarn  = "arn:aws:iam::471337104212:user/kubernetes-service-account"
+    userarn  = "arn:aws:iam::471337104212:user/circleci"
     username = "kubernetes-service-account"
     groups   = ["system:masters"]
   }
