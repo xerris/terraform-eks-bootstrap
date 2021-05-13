@@ -23,28 +23,12 @@ cluster_logs_path = "cluster_logs"
 node_logs_path = "node_logs"
 monthly_billing_threshold = 500
 billing_currency = "USD"
-account_id = "471337104212"
 map_roles = [
-  {
-    rolearn  = "arn:aws:iam::471337104212:role/aws-service-role/eks.amazonaws.com/AWSServiceRoleForAmazonEKS"
-    username = "AWSServiceRoleForAmazonEKS"
-    groups   = ["system:masters"]
-  },
-  {
-    rolearn  = "arn:aws:iam::471337104212:role/project_eks_cluster-dev-K8sFullAdmin"
-    username = "project_eks_cluster-dev-K8sFullAdmin"
-    groups   = ["system:masters"]
-  },
-  {
-    rolearn  = "arn:aws:iam::471337104212:role/project_eks_cluster-dev-K8sClusterAdmin"
-    username = " adminuser:{{SessionName}}"
-    groups   = ["ad-cluster-admins"]
-  },
-  {
-    rolearn  = "arn:aws:iam::471337104212:role/project_eks_cluster-dev-K8sDeveloper"
-    username = "devuser:{{SessionName}}"
-    groups   = ["ad-cluster-devs"]
-  }
+  #{
+  #  rolearn  = "arn:aws:iam::471337104212:role/project_eks_cluster-dev-K8sFullAdmin"
+  #  username = "project_eks_cluster-dev-K8sFullAdmin"
+  #  groups   = ["system:masters"]
+  #}
   ]
 
 map_users = [

@@ -8,7 +8,7 @@ resource "aws_iam_role" "K8sFullAdmin-role" {
       {
         "Action": "sts:AssumeRole",
         "Principal": {
-          "AWS": "arn:aws:iam::${var.account_id}:root",
+          "AWS": "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root",
           "Service": "ec2.amazonaws.com"
         },
         "Effect": "Allow",
@@ -29,7 +29,7 @@ resource "aws_iam_role" "K8sClusterAdmin-role" {
       {
         "Action": "sts:AssumeRole",
         "Principal": {
-          "AWS": "arn:aws:iam::${var.account_id}:root",
+          "AWS": "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root",
           "Service": "ec2.amazonaws.com"
         },
         "Effect": "Allow",
@@ -50,7 +50,7 @@ resource "aws_iam_role" "K8sDeveloper-role" {
       {
         "Action": "sts:AssumeRole",
         "Principal": {
-            "AWS": "arn:aws:iam::${var.account_id}:root",
+            "AWS": "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root",
             "Service": "ec2.amazonaws.com"
         },
         "Effect": "Allow",
@@ -128,7 +128,7 @@ resource "aws_iam_policy" "K8sFullAdmin-group-policy" {
   "Statement": {
     "Effect": "Allow",
     "Action": "sts:AssumeRole",
-    "Resource": "arn:aws:iam::${var.account_id}:role/${var.eks_cluster_name}-${var.env}-K8sFullAdmin"
+    "Resource": "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/${var.eks_cluster_name}-${var.env}-K8sFullAdmin"
   }
 }
   EOF
@@ -154,7 +154,7 @@ resource "aws_iam_policy" "K8sClusterAdmin-group-policy" {
   "Statement": {
     "Effect": "Allow",
     "Action": "sts:AssumeRole",
-    "Resource": "arn:aws:iam::${var.account_id}:role/${var.eks_cluster_name}-${var.env}-K8sClusterAdmin"
+    "Resource": "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/${var.eks_cluster_name}-${var.env}-K8sClusterAdmin"
   }
 }
   EOF
@@ -179,7 +179,7 @@ resource "aws_iam_policy" "K8sDeveloper-group-policy" {
   "Statement": {
     "Effect": "Allow",
     "Action": "sts:AssumeRole",
-    "Resource": "arn:aws:iam::${var.account_id}:role/${var.eks_cluster_name}-${var.env}-K8sDeveloper"
+    "Resource": "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/${var.eks_cluster_name}-${var.env}-K8sDeveloper"
   }
 }
   EOF

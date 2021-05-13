@@ -6,6 +6,8 @@ data "aws_eks_cluster_auth" "cluster" {
   name = module.project_eks_cluster.cluster_id
 }
 
+data "aws_caller_identity" "current" {}
+
 provider "kubernetes" {
   host                   = data.aws_eks_cluster.cluster.endpoint
   cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster.certificate_authority.0.data)
@@ -23,7 +25,28 @@ locals{
     rolearn  =  aws_iam_role.eks-autoscale-role.arn
     username = "system:node:{{EC2PrivateDNSName}}"
     groups   = ["system:bootstrappers", "system:nodes"]
-  }]
+  },
+  {
+    rolearn  = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/aws-service-role/eks.amazonaws.com/AWSServiceRoleForAmazonEKS"
+    username = "AWSServiceRoleForAmazonEKS"
+    groups   = ["system:masters"]
+  },
+  {
+    rolearn  = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/project_eks_cluster-dev-K8sFullAdmin"
+    username = "project_eks_cluster-dev-K8sFullAdmin"
+    groups   = ["system:masters"]
+  },
+  {
+    rolearn  = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/project_eks_cluster-dev-K8sClusterAdmin"
+    username = " adminuser:{{SessionName}}"
+    groups   = ["ad-cluster-admins"]
+  },
+  {
+    rolearn  = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/project_eks_cluster-dev-K8sDeveloper"
+    username = "devuser:{{SessionName}}"
+    groups   = ["ad-cluster-devs"]
+  }
+  ]
 }
 
 resource "tls_private_key" "this" {

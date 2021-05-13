@@ -1,6 +1,3 @@
-variable "account_id"{
-    default = "471337104212"
-}
 variable "env" {
     default =  "dev"
 }
