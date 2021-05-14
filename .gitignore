@@ -1,4 +1,6 @@
 .terraform*
 *.pem
 kubeconfig*
+*.csv
+aws-iam-*
 
