@@ -62,8 +62,8 @@ resource "aws_key_pair" "bastion_key_pair" {
 output "private_key" {
   value = tls_private_key.this.private_key_pem
   sensitive = true
-
 }
+
 resource "aws_security_group" "bastion" {
   name        = "bastion-security-group"
   description = "Allow SSH traffic"
@@ -133,6 +133,9 @@ module "project_eks_cluster" {
 
 }
 
+output "project_eks_cluster_id"{
+  value = module.project_eks_cluster.cluster_id
+}
 
 
 resource "aws_eks_node_group" "project-eks-cluster-nodegroup" {
