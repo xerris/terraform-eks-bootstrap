@@ -15,6 +15,12 @@ anchors:
       command: |
         bash ./terraform_exec.sh 1
 
+  destroy-infra: &destroy-infra
+    run:
+      name: Destroy Kuberntes Apps
+      command: |
+        bash ./terraform_exec.sh 2
+
   install-dependencies: &install-dependencies
     run:
       name: Install terraform
@@ -31,12 +37,32 @@ jobs:
       - *configure-aws-access
       - *deploy-infra
 
+  destroyInfra:
+    executor: machine
+    steps:
+      - checkout
+      - *install-dependencies
+      - *configure-aws-access
+      - *destroy-infra
+
 workflows:
   version: 2
   devDeploy:
     jobs:
       - deployInfra:
           context: ISENGARD-DEV
+          filters:
+            branches:
+              only:
+                - dev
+  devDestroy:
+    jobs:
+      - destroyInfra:
+          context: ISENGARD-DEV
+          filters:
+            branches:
+              only:
+                - dev-destroy
 
   stageDeploy:
     jobs:
@@ -46,6 +72,15 @@ workflows:
             branches:
               only:
                 - main
+  stageDestroy:
+    jobs:
+      - destroyInfra:
+          context: ISENGARD-STAGE
+          filters:
+            branches:
+              only:
+                - main-destroy
+
   prodDeploy:
     jobs:
       - approve-deploy:
