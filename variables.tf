@@ -97,6 +97,10 @@ variable "cluster_node_disk_size"{
     default = "200"
 }
 
+variable "create_bastion" {
+  default = 1
+}
+
 variable "bucket_cluster_logs_name" {
     default = "project_eks_logs"
 }

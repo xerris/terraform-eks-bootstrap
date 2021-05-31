@@ -23,6 +23,7 @@ cluster_logs_path = "cluster_logs"
 node_logs_path = "node_logs"
 monthly_billing_threshold = 500
 billing_currency = "USD"
+create_bastion = 1
 map_roles = [
   #{
   #  rolearn  = "arn:aws:iam::471337104212:role/project_eks_cluster-dev-K8sFullAdmin"

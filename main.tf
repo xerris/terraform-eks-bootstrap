@@ -94,8 +94,8 @@ resource "aws_security_group" "bastion" {
 module "ec2_cluster" {
   source                 = "terraform-aws-modules/ec2-instance/aws"
   version                = "~> 2.0"
-  name                   = "bastion"
-  instance_count         = 1
+  name                   = "bastion-${var.env}"
+  instance_count         = var.create_bastion
   ami           = var.cluster_node_image_id
   instance_type          = "t2.micro"
   key_name      = aws_key_pair.bastion_key_pair.key_name
