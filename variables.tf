@@ -87,7 +87,7 @@ variable "cluster_node_instance_type" {
 }
 
 variable "cluster_node_billing_mode" {
-    default = "spot"
+    default = "SPOT"
 }
 
 variable "cluster_node_image_id" {

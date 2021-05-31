@@ -151,7 +151,7 @@ resource "aws_eks_node_group" "project-eks-cluster-nodegroup" {
   subnet_ids      = [local.subnet_ids[count.index]]
   instance_types = [var.cluster_node_instance_type]
   disk_size = var.cluster_node_disk_size
-
+  capacity_type = var.cluster_node_billing_mode
   scaling_config {
     desired_size = var.cluster_min_node_count
     max_size     = var.cluster_max_node_count
