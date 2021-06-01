@@ -83,11 +83,12 @@ variable "cluster_max_node_count" {
 }
 
 variable "cluster_node_instance_type" {
-    default = "m5.large"
+  type        = list(string)
+  default = []
 }
 
 variable "cluster_node_billing_mode" {
-    default = "SPOT"
+    default = "SPOT" #ON_DEMAND
 }
 
 variable "cluster_node_image_id" {

@@ -149,9 +149,10 @@ resource "aws_eks_node_group" "project-eks-cluster-nodegroup" {
   node_group_name = "node-group-${var.eks_cluster_name}-${count.index}"
   node_role_arn   = aws_iam_role.eks-autoscale-role.arn
   subnet_ids      = [local.subnet_ids[count.index]]
-  instance_types = [var.cluster_node_instance_type]
+  instance_types = var.cluster_node_instance_type
   disk_size = var.cluster_node_disk_size
   capacity_type = var.cluster_node_billing_mode
+  force_update_version = true
   scaling_config {
     desired_size = var.cluster_min_node_count
     max_size     = var.cluster_max_node_count
