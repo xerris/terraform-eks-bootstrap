@@ -75,11 +75,11 @@ variable "eks_cluster_version" {
 }
 
 variable "cluster_min_node_count" {
-    default = 3
+    default = 1
 }
 
 variable "cluster_max_node_count" {
-    default = 5
+    default = 2
 }
 
 variable "cluster_node_instance_type" {
