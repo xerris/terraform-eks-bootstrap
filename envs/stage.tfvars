@@ -16,7 +16,6 @@ cluster_min_node_count = 3
 cluster_max_node_count = 4
 cluster_node_instance_type = ["c3.xlarge","c4.xlarge","c5.xlarge","m3.large","m4.large","m5.large"]
 cluster_node_billing_mode = "SPOT"
-cluster_node_image_id = "ami-048f6ed62451373d9"
 cluster_node_disk_size = "200"
 bucket_cluster_logs_name = "project_eks_logs"
 cluster_logs_path = "cluster_logs"

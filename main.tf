@@ -6,6 +6,23 @@ data "aws_eks_cluster_auth" "cluster" {
   name = module.project_eks_cluster.cluster_id
 }
 
+data "aws_ami" "amazon-linux-2-ami" {
+ most_recent = true
+ owners           = ["amazon"]
+ filter {
+  name   = "owner-alias"
+  values = ["amazon"]
+ }
+ filter {
+   name   = "name"
+   values = ["amzn2-ami-hvm*"]
+ }
+     filter {
+       name   = "architecture"
+       values = ["x86_64"]
+     }
+}
+
 data "aws_caller_identity" "current" {}
 
 provider "kubernetes" {
@@ -96,7 +113,7 @@ module "ec2_cluster" {
   version                = "~> 2.0"
   name                   = "bastion-${var.env}"
   instance_count         = var.create_bastion
-  ami           = var.cluster_node_image_id
+  ami           = data.aws_ami.amazon-linux-2-ami.id
   instance_type          = "t2.micro"
   key_name      = aws_key_pair.bastion_key_pair.key_name
   monitoring             = true

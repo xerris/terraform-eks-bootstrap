@@ -91,9 +91,6 @@ variable "cluster_node_billing_mode" {
     default = "SPOT" #ON_DEMAND
 }
 
-variable "cluster_node_image_id" {
-    default = "ami-048f6ed62451373d9"
-}
 variable "cluster_node_disk_size"{
     default = "200"
 }
