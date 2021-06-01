@@ -39,7 +39,7 @@ if [ $APPLY == 2 ]; then
     echo "###############################"
     echo "## Executing terraform destroy ##"
     echo "###############################"
-    terraform destroy --auto-approve -var-file=envs/${ENV}.tfvars -var="flux_token=${2}"
+    terraform destroy --auto-approve -var-file=envs/${ENV}.tfvars
 fi
 
 if [ $APPLY == 1 ]; then
