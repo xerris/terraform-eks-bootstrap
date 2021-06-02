@@ -55,6 +55,8 @@ workflows:
             branches:
               only:
                 - dev
+                - eks*
+                - XDP*
   devDestroy:
     jobs:
       - destroyInfra:
