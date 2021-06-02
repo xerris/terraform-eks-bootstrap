@@ -157,7 +157,7 @@ output "project_eks_cluster_id"{
 resource "random_pet" "random" {
   count = length(local.subnet_ids)
   keepers = {
-    name = "${local.subnet_ids[count.index]}-${var.eks_cluster_version}-${concat(var.cluster_node_instance_type)}"
+    name = "${local.subnet_ids[count.index]}-${var.eks_cluster_version}-${join('-',var.cluster_node_instance_type)}"
   }
   length = 1
 }
