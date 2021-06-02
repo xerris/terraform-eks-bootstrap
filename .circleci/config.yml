@@ -54,9 +54,7 @@ workflows:
           filters:
             branches:
               only:
-                - dev
-                - eks-*
-                - XDP-*
+                - eks*
   devDestroy:
     jobs:
       - destroyInfra:
