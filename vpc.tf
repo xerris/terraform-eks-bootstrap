@@ -11,7 +11,7 @@ resource "aws_eip" "nat" {
 module "vpc" {
   source = "terraform-aws-modules/vpc/aws"
   create_vpc           = var.create_vpc
-  name = var.vpc_name
+  name = "${var.vpc_name}-${var.env}"
   cidr = var.vpc_subnet
   azs             = data.aws_availability_zones.available.names
   private_subnets = var.private_subnets
