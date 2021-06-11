@@ -33,7 +33,8 @@ module "vpc" {
 
 output "vpc_data" {
     value ={
-        id = module.vpc.vpc_id
-        subnet_ids = module.vpc.private_subnets
+        id = local.vpc_id
+        priv_subnet_ids = local.subnet_ids
+        public_subnet_ids = local.public_subnet_ids
     }
 }
