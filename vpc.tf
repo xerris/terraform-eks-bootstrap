@@ -12,7 +12,7 @@ module "vpc" {
   source = "terraform-aws-modules/vpc/aws"
   create_vpc           = var.create_vpc
   name = "${var.vpc_name}-${var.env}"
-  cidr = var.vpc_subnet
+  cidr = var.vpc_cidr
   azs             = data.aws_availability_zones.available.names
   private_subnets = var.private_subnets
   public_subnets  = var.public_subnets
