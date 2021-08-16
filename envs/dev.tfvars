@@ -27,7 +27,7 @@ monthly_billing_threshold = 500
 billing_currency = "USD"
 create_bastion = 1
 rds_cluster_name = "project-eks-rds"
-db_name = "project-eks-db"
+db_name = "projecteksdb"
 db_master_user = "project-eks-master-user"
 map_roles = [
   #{
