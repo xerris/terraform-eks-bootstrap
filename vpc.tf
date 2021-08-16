@@ -31,10 +31,49 @@ module "vpc" {
   }
 }
 
+resource "random_integer" "id-db" {
+  min     = 1
+  max     = 50
+  keepers = {
+    # Generate a new integer each time we switch to a new listener ARN
+    listener_arn = "${var.rds_cluster_name}-${var.env}"
+  }
+}
+
+resource "random_password" "password" {
+  length           = 16
+  special          = true
+  override_special = "_%@"
+}
+
+resource "aws_rds_cluster" "rds_cluster" {
+  depends_on = [
+    module.vpc
+  ]
+  cluster_identifier      = "${var.rds_cluster_name}-${var.env}-${random_integer.id-db.result}"
+  engine                  = var.rds_engine
+  engine_version          = var.engine_version
+  availability_zones      = data.aws_availability_zones.available.names
+  database_name           = var.db_name
+  master_username         = var.db_master_user
+  master_password         = random_password.password.result
+  backup_retention_period = var.db_backup_retention
+  preferred_backup_window = var.db_backup_window
+  tags = {
+    Owner       = var.owner_tag
+    Environment = var.env
+    Terraform   = true
+  }
+}
+
+
 output "vpc_data" {
     value ={
         id = local.vpc_id
         priv_subnet_ids = local.subnet_ids
         public_subnet_ids = local.public_subnet_ids
+        rds_endpoint = aws_rds_cluster.rds_cluster.endpoint
+        rds_master_user = var.db_master_user
+        rds_master_password = random_password.password.result
     }
 }

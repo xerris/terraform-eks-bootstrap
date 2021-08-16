@@ -184,3 +184,33 @@ variable "username" {
 variable "dev_users" {
   default = []
 }
+
+variable "rds_cluster_name" {
+
+}
+
+variable "rds_engine" {
+ default = "aurora-mysql"
+}
+
+variable "engine_version" {
+  default =  "5.7.mysql_aurora.2.03.2"
+
+}
+
+
+variable "db_name" {
+
+}
+
+variable "db_master_user" {
+
+}
+
+variable "db_backup_retention" {
+  default = 5
+}
+
+variable "db_backup_window" {
+  default = "07:00-09:00"
+}
