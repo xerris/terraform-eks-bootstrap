@@ -11,10 +11,10 @@ ENV="${ENV:-dev}"
 AWS_REGION="${AWS_REGION:-ca-central-1}"
 echo "Configuring AWS Profiles"
 
-aws configure set role_arn "arn:aws:iam::${ACCOUNT_ID}:role/deployment-role" --profile deployment-role
-aws configure set source_profile default --profile deployment-role
-aws configure set role_session_name test-session --profile deployment-role
-export AWS_PROFILE=deployment-role
+aws configure set role_arn "arn:aws:iam::${ACCOUNT_ID}:role/deployment-role" --profile deployment-profile
+aws configure set source_profile default --profile deployment-profile
+aws configure set role_session_name test-session --profile deployment-profile
+export AWS_PROFILE=deployment-profile
 
 APPLY=${1:-0} #If set terraform will force apply changes
 commit_hash=`git rev-parse --short HEAD`
