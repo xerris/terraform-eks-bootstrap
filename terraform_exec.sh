@@ -23,9 +23,7 @@ build_number="${BITBUCKET_BUILD_NUMBER:=local}"
 #export TF_LOG=TRACE
 export TF_VAR_commit_hash="${commit_hash}"
 export TF_VAR_build_number="${build_number}"
-echo $ACCOUNT_ID
-echo $ENV
-echo $AWS_REGION
+
 terraform init \
 -backend-config="bucket=project-eks-terraform-state-${ENV}" \
 -backend-config="key=${ENV}/project-eks-bootstrap.tfstate" \
