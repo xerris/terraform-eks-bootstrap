@@ -3,4 +3,4 @@
 kubeconfig*
 *.csv
 aws-iam-*
-
+.vs*

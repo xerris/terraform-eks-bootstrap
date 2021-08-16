@@ -9,13 +9,13 @@ echo "###############################"
 
 ENV="${ENV:-dev}"
 AWS_REGION="${AWS_REGION:-us-east-1}"
-#echo "Configuring AWS Profiles"
-#aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID --profile aldo-user
-#aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY --profile aldo-user
-#aws configure set role_arn "arn:aws:iam::${ACCOUNT_ID}:role/aldo-jenkins" --profile aldo-role
-#aws configure set source_profile aldo-user --profile aldo-role
-#aws configure set role_session_name aldo-test-session --profile aldo-role
-#export AWS_PROFILE=aldo-role
+echo "Configuring AWS Profiles"
+aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID --profile kurbee-user
+aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY --profile kurbee-user
+aws configure set role_arn "arn:aws:iam::${ACCOUNT_ID}:role/deployment-role" --profile deployment-role
+aws configure set source_profile kurbee-user --profile deployment-role
+aws configure set role_session_name aldo-test-session --profile deployment-role
+export AWS_PROFILE=deployment-role
 
 APPLY=${1:-0} #If set terraform will force apply changes
 commit_hash=`git rev-parse --short HEAD`
@@ -29,8 +29,8 @@ terraform init \
 -backend-config="key=${ENV}/project-eks-bootstrap.tfstate" \
 -backend-config="dynamodb_table=${ENV}-project-terraform-state-lock-dynamo" \
 -backend-config="region=${AWS_REGION}"
-#-backend-config="role_arn=arn:aws:iam::${ACCOUNT_ID}:role/aldo-jenkins" \
-#-backend-config="session_name=${ENV}-omni-dataapps"
+-backend-config="role_arn=arn:aws:iam::${ACCOUNT_ID}:role/deployment-role" \
+-backend-config="session_name=${ENV}-session"
 
 terraform validate
 terraform plan -var-file=envs/${ENV}.tfvars
