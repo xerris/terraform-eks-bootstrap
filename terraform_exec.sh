@@ -30,7 +30,7 @@ terraform init \
 -backend-config="dynamodb_table=${ENV}-project-eks-terraform-state-lock-dynamo" \
 -backend-config="region=${AWS_REGION}" \
 -backend-config="role_arn=arn:aws:iam::${ACCOUNT_ID}:role/deployment-role" \
--backend-config="session_name=${ENV}-session"
+-backend-config="session_name=test-session"
 
 terraform validate
 terraform plan -var-file=envs/${ENV}.tfvars
