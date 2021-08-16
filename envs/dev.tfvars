@@ -28,7 +28,7 @@ billing_currency = "USD"
 create_bastion = 1
 rds_cluster_name = "project-eks-rds"
 db_name = "projecteksdb"
-db_master_user = "project-eks-master-user"
+db_master_user = "projecteksmasteruser"
 map_roles = [
   #{
   #  rolearn  = "arn:aws:iam::471337104212:role/project_eks_cluster-dev-K8sFullAdmin"
