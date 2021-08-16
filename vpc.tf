@@ -76,4 +76,5 @@ output "vpc_data" {
         rds_master_user = var.db_master_user
         rds_master_password = random_password.password.result
     }
+    sensitive = true
 }
