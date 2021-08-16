@@ -59,6 +59,7 @@ resource "aws_rds_cluster" "rds_cluster" {
   master_password         = random_password.password.result
   backup_retention_period = var.db_backup_retention
   preferred_backup_window = var.db_backup_window
+  skip_final_snapshot = true
   tags = {
     Owner       = var.owner_tag
     Environment = var.env
