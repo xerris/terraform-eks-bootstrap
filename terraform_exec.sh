@@ -10,7 +10,7 @@ echo "###############################"
 ENV="${ENV:-dev}"
 AWS_REGION="${AWS_REGION:-ca-central-1}"
 echo "Configuring AWS Profiles"
-
+export AWS_PROFILE=default
 aws configure set role_arn "arn:aws:iam::${ACCOUNT_ID}:role/deployment-role" --profile deployment-profile
 aws configure set source_profile default --profile deployment-profile
 aws configure set role_session_name test-session --profile deployment-profile
@@ -24,6 +24,7 @@ export TF_VAR_commit_hash="${commit_hash}"
 export TF_VAR_build_number="${build_number}"
 
 terraform init \
+-upgrade \
 -backend-config="bucket=project-eks-terraform-state-${ENV}" \
 -backend-config="key=${ENV}/project-eks-bootstrap.tfstate" \
 -backend-config="dynamodb_table=${ENV}-project-eks-terraform-state-lock-dynamo" \
