@@ -1,3 +1,11 @@
+version: 2.1
+executors:
+  terraform:
+    docker:
+      - image: atorresd/tf15-awscli-kubectl:latest
+orbs:
+  aws-cli: circleci/aws-cli@0.1.18
+
 anchors:
   configure-aws-access: &configure-aws-access
     run:
@@ -13,12 +21,16 @@ anchors:
     run:
       name: Deploy terraform platform infra
       command: |
+        PATH="/home/circleci/.local/bin/:$PATH"
+        source $HOME/.profile
         bash ./terraform_exec.sh 1
 
   destroy-infra: &destroy-infra
     run:
       name: Destroy Kuberntes Apps
       command: |
+        PATH="/home/circleci/.local/bin/:$PATH"
+        source $HOME/.profile
         bash ./terraform_exec.sh 2
 
   install-dependencies: &install-dependencies
@@ -31,21 +43,21 @@ anchors:
 jobs:
   deployInfra:
     #executor: machine
-    machine:
-      image: ubuntu-2004:202107-02
+    executor: terraform
+    environment:
+      BASH_ENV: /home/circleci/.bashrc
     steps:
       - checkout
-      - *install-dependencies
+      #- *install-dependencies
       - *configure-aws-access
       - *deploy-infra
 
   destroyInfra:
     #executor: machine
-    machine:
-      image: ubuntu-2004:202107-02
+    executor: terraform
     steps:
       - checkout
-      - *install-dependencies
+      #- *install-dependencies
       - *configure-aws-access
       - *destroy-infra
 
