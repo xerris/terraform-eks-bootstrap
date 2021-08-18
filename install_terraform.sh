@@ -14,7 +14,8 @@ echo "export PATH=~/.local/bin:$PATH" >> .profile
     && sudo chmod +x /usr/local/bin/kubectl
 
   export HELM_VERSION="v3.5.4"
-  sudo wget -q https://get.helm.sh/helm-${HELM_VERSION}-linux-amd64.tar.gz -O - | tar -xzO linux-amd64/helm > /usr/local/bin/helm \
+  wget -q https://get.helm.sh/helm-${HELM_VERSION}-linux-amd64.tar.gz
+  sudo tar -xzO linux-amd64/helm > /usr/local/bin/helm \
     && sudo chmod +x /usr/local/bin/helm
 
   helm repo add "stable" "https://charts.helm.sh/stable" --force-update
