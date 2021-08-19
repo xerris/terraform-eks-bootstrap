@@ -2,9 +2,10 @@ version: 2.1
 executors:
   terraform:
     docker:
-      - image: atorresd/tf15-awscli-kubectl:latest
+      - image: circleci/node:12.14.1
 orbs:
   aws-cli: circleci/aws-cli@0.1.18
+  jq: circleci/jq@1.9.1
 
 anchors:
   configure-aws-access: &configure-aws-access
@@ -37,6 +38,10 @@ anchors:
     run:
       name: Install terraform
       command: |
+        PATH="/home/circleci/.local/bin/:$PATH"
+        sudo apt-get update
+        sudo apt-get install -y python3-pip
+        pip3 install --user boto3 awscli
         bash ./install_terraform.sh
 
 
@@ -48,7 +53,7 @@ jobs:
       BASH_ENV: /home/circleci/.bashrc
     steps:
       - checkout
-      #- *install-dependencies
+      - *install-dependencies
       - *configure-aws-access
       - *deploy-infra
 
