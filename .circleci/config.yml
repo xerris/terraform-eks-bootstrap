@@ -66,7 +66,7 @@ workflows:
   TriggerdevDeploy:
     triggers:
       - schedule:
-          cron: "30 7 * * *"
+          cron: "30 13 * * *"
           filters:
             branches:
               only:
@@ -78,7 +78,7 @@ workflows:
   TriggerdevDestroy:
     triggers:
       - schedule:
-          cron: "30 20 * * *"
+          cron: "30 2 * * *"
           filters:
             branches:
               only:
@@ -90,7 +90,7 @@ workflows:
   TriggerStageDeploy:
     triggers:
       - schedule:
-          cron: "30 7 * * *"
+          cron: "30 13 * * *"
           filters:
             branches:
               only:
@@ -102,7 +102,7 @@ workflows:
   TriggerStageDestroy:
     triggers:
       - schedule:
-          cron: "30 20 * * *"
+          cron: "30 2 * * *"
           filters:
             branches:
               only:
