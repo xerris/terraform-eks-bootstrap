@@ -15,8 +15,8 @@ anchors:
         mkdir -p ~/.aws
         file=~/.aws/credentials
         echo "[default]" > $file
-        echo "aws_access_key_id = $AWS_ACCESS_KEY_ID" >> $file
-        echo "aws_secret_access_key = $AWS_SECRET_ACCESS_KEY" >> $file
+        echo "aws_access_key_id = $AWS_ACCESS_KEY_ID_MASTER" >> $file
+        echo "aws_secret_access_key = $AWS_SECRET_ACCESS_KEY_MASTER" >> $file
 
   deploy-infra: &deploy-infra
     run:
