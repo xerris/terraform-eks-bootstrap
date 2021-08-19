@@ -34,6 +34,7 @@ terraform init \
 -backend-config="bucket=project-eks-terraform-state-${ENV}" \
 -backend-config="key=${ENV}/project-eks-bootstrap.tfstate" \
 -backend-config="dynamodb_table=${ENV}-project-eks-terraform-state-lock-dynamo" \
+-backend-config="profile=deployment-profile" \
 -backend-config="region=${AWS_REGION}"
 
 
