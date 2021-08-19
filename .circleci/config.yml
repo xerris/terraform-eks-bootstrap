@@ -39,9 +39,6 @@ anchors:
       name: Install terraform
       command: |
         PATH="/home/circleci/.local/bin/:$PATH"
-        sudo apt-get update
-        sudo apt-get install -y python3-pip
-        pip3 install --user boto3 awscli
         bash ./install_terraform.sh
 
 

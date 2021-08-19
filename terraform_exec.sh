@@ -11,9 +11,15 @@ ENV="${ENV:-dev}"
 AWS_REGION="${AWS_REGION:-ca-central-1}"
 echo "Configuring AWS Profiles"
 export AWS_PROFILE=default
-aws configure set role_arn "arn:aws:iam::${ACCOUNT_ID}:role/deployment-role" --profile deployment-profile
-aws configure set source_profile default --profile deployment-profile
-aws configure set role_session_name test-session --profile deployment-profile
+
+temp_role=$(aws sts assume-role --role-arn "arn:aws:iam::${ACCOUNT_ID}:role/deployment-role" --role-session-name "RoleSession1" --profile deployment-profile)
+aws configure set aws_access_key_id $(echo $temp_role | jq .Credentials.AccessKeyId | xargs) --profile deployment-profile
+aws configure set aws_secret_access_key $(echo $temp_role | jq .Credentials.SecretAccessKey | xargs) --profile deployment-profile
+aws configure set aws_session_token $(echo $temp_role | jq .Credentials.SessionToken | xargs) --profile deployment-profile
+
+#aws configure set role_arn "arn:aws:iam::${ACCOUNT_ID}:role/deployment-role" --profile deployment-profile
+#aws configure set source_profile default --profile deployment-profile
+#aws configure set role_session_name test-session --profile deployment-profile
 export AWS_PROFILE=deployment-profile
 
 APPLY=${1:-0} #If set terraform will force apply changes
