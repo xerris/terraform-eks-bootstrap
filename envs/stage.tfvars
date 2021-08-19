@@ -1,6 +1,6 @@
 env = "stage"
 create_vpc = true
-region = "us-east-1"
+region = "ca-central-1"
 vpc_name = "project_eks_vpc"
 vpc_cidr = "10.1.0.0/16"
 vpc_id   = ""
@@ -21,7 +21,7 @@ cluster_node_disk_size = "200"
 bucket_cluster_logs_name = "project_eks_logs"
 cluster_logs_path = "cluster_logs"
 node_logs_path = "node_logs"
-monthly_billing_threshold = 500
+monthly_billing_threshold = 200
 billing_currency = "USD"
 create_bastion = 1
 map_roles = [
@@ -34,7 +34,7 @@ map_roles = [
 
 map_users = [
   {
-    userarn  = "arn:aws:iam::588449747718:user/circleci"
+    userarn  = "arn:aws:iam::209010588440:user/deployment-user"
     username = "kubernetes-service-account"
     groups   = ["system:masters"]
   }

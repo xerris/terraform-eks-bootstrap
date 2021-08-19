@@ -44,7 +44,6 @@ anchors:
 
 jobs:
   deployInfra:
-    #executor: machine
     executor: terraform
     environment:
       BASH_ENV: /home/circleci/.bashrc
@@ -55,16 +54,63 @@ jobs:
       - *deploy-infra
 
   destroyInfra:
-    #executor: machine
     executor: terraform
     steps:
       - checkout
-      #- *install-dependencies
+      - *install-dependencies
       - *configure-aws-access
       - *destroy-infra
 
 workflows:
   version: 2
+  TriggerdevDeploy:
+    triggers:
+      - schedule:
+          cron: "30 7 * * *"
+          filters:
+            branches:
+              only:
+                - dev
+    jobs:
+      - deployInfra:
+          context: ISENGARD-DEV
+
+  TriggerdevDestroy:
+    triggers:
+      - schedule:
+          cron: "30 20 * * *"
+          filters:
+            branches:
+              only:
+                - dev
+    jobs:
+      - destroyInfra:
+          context: ISENGARD-DEV
+
+  TriggerStageDeploy:
+    triggers:
+      - schedule:
+          cron: "30 7 * * *"
+          filters:
+            branches:
+              only:
+                - main
+    jobs:
+      - deployInfra:
+          context: ISENGARD-STAGE
+
+  TriggerStageDestroy:
+    triggers:
+      - schedule:
+          cron: "30 20 * * *"
+          filters:
+            branches:
+              only:
+                - main
+    jobs:
+      - destroyInfra:
+          context: ISENGARD-STAGE
+
   devDeploy:
     jobs:
       - deployInfra:
