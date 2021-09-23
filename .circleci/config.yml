@@ -24,7 +24,7 @@ anchors:
       command: |
         PATH="/home/circleci/.local/bin/:$PATH"
         source $HOME/.profile
-        bash ./terraform_exec.sh 1
+        #bash ./terraform_exec.sh 1
 
   destroy-infra: &destroy-infra
     run:
@@ -32,7 +32,7 @@ anchors:
       command: |
         PATH="/home/circleci/.local/bin/:$PATH"
         source $HOME/.profile
-        bash ./terraform_exec.sh 2
+        #bash ./terraform_exec.sh 2
 
   install-dependencies: &install-dependencies
     run:
