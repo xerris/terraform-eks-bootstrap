@@ -10,6 +10,10 @@ variable "vpc_id" {
   default = ""
 }
 
+variable "cluster_public_access"{
+  type = bool
+}
+
 variable "private_subnets_ids" {
   default = []
   type = list
