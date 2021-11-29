@@ -62,17 +62,18 @@ locals{
     rolearn  = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/project_eks_cluster-dev-K8sDeveloper"
     username = "devuser:{{SessionName}}"
     groups   = ["ad-cluster-devs"]
-  },
-  {
-      rolearn = var.eks_master_role
-      "username" : "AWSAdministratorAccess:{{SessionName}}"
-      groups = ["system:masters"]
-    },
-    {
-      rolearn = var.eks_dev_role
-      "username" : "AWSReadOnlyAccess:{{SessionName}}"
-      groups = ["ad-cluster-admins"]
-    },
+  }
+  #,
+  #{
+  #    rolearn = var.eks_master_role
+  #    "username" : "AWSAdministratorAccess:{{SessionName}}"
+  #    groups = ["system:masters"]
+  #  },
+  #  {
+  #    rolearn = var.eks_dev_role
+  #    "username" : "AWSReadOnlyAccess:{{SessionName}}"
+  #    groups = ["ad-cluster-admins"]
+  #  },
   ]
 }
 

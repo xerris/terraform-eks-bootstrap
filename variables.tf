@@ -14,6 +14,10 @@ variable "cluster_public_access"{
   type = bool
 }
 
+variable "cni_enabled"{
+  type = bool
+}
+
 variable "private_subnets_ids" {
   default = []
   type = list

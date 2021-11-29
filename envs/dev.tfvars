@@ -7,6 +7,7 @@ vpc_cidr = "10.1.0.0/16"
 #private_subnets_ids = ["subnet-0e6c47a42ca1d4920"]
 #public_subnets_ids = ["subnet-0e6c47a42ca1d4920"]
 cluster_public_access = true
+cni_enabled = true
 private_subnets = ["10.1.1.0/24","10.1.2.0/24"]
 public_subnets = ["10.1.3.0/24","10.1.4.0/24"]
 enable_natgateway = true
