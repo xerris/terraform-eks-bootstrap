@@ -31,6 +31,7 @@ create_bastion = 1
 rds_cluster_name = "project-eks-rds"
 db_name = "projecteksdb"
 db_master_user = "projecteksmasteruser"
+eks_master_role = "arn:aws:iam::370365354210:group/xerris-developer"
 map_roles = [
   #{
   #  rolearn  = "arn:aws:iam::471337104212:role/project_eks_cluster-dev-K8sFullAdmin"
@@ -41,8 +42,13 @@ map_roles = [
 
 map_users = [
   {
-    userarn  = "arn:aws:iam::209010588440:user/deployment-user"
+    userarn  = "arn:aws:iam::370365354210:user/deployment-user"
     username = "kubernetes-service-account"
+    groups   = ["system:masters"]
+  },
+  {
+    userarn  = "arn:aws:iam::370365354210:user/andres"
+    username = "project_eks_cluster-dev-K8sFullAdmin"
     groups   = ["system:masters"]
   }
 ]

@@ -18,6 +18,10 @@ variable "cni_enabled"{
   type = bool
 }
 
+variable "eks_master_role"{
+  type = string
+}
+
 variable "private_subnets_ids" {
   default = []
   type = list
