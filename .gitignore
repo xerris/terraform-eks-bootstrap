@@ -1,4 +1,5 @@
-.terraform*
+.terraform.lock*
+.terraform/**
 *.pem
 kubeconfig*
 *.csv
