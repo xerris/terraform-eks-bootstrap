@@ -63,6 +63,17 @@ locals{
     username = "devuser:{{SessionName}}"
     groups   = ["ad-cluster-devs"]
   }
+  #,
+  #{
+  #    rolearn = var.eks_master_role
+  #    "username" : "AWSAdministratorAccess:{{SessionName}}"
+  #    groups = ["system:masters"]
+  #  },
+  #  {
+  #    rolearn = var.eks_dev_role
+  #    "username" : "AWSReadOnlyAccess:{{SessionName}}"
+  #    groups = ["ad-cluster-admins"]
+  #  },
   ]
 }
 
@@ -134,6 +145,7 @@ module "project_eks_cluster" {
     aws_iam_group_policy_attachment.K8sDeveloper-group-policy-attach
     ]
   source          = "terraform-aws-modules/eks/aws"
+  cluster_enabled_log_types = ["api", "audit", "authenticator", "scheduler"]
   cluster_name    = "${var.eks_cluster_name}-${var.env}"
   cluster_version = var.eks_cluster_version
   subnets         = local.subnet_ids
@@ -141,6 +153,12 @@ module "project_eks_cluster" {
   map_roles =   concat(var.map_roles, local.map_role)
   map_users    = var.map_users
   map_accounts = var.map_accounts
+  enable_irsa               = true
+  attach_worker_cni_policy   = var.cni_enabled
+  cluster_endpoint_public_access =  var.cluster_public_access
+  cluster_endpoint_private_access =  !var.cluster_public_access
+  cluster_create_endpoint_private_access_sg_rule =  var.cluster_public_access
+  cluster_endpoint_private_access_cidrs = var.cluster_public_access ? [] : ["10.0.0.0/8"]
 
   tags = {
     Owner       = var.owner_tag
@@ -188,6 +206,7 @@ resource "aws_eks_node_group" "project-eks-cluster-nodegroup" {
     Environment = var.env
     Terraform   = true
     "kubernetes.io/cluster/${var.eks_cluster_name}-${var.env}" = "owned"
+    "k8s.io/cluster-autoscaler/enabled"                        = "true"
   }
   remote_access {
     ec2_ssh_key = aws_key_pair.bastion_key_pair.key_name
@@ -218,7 +237,21 @@ resource "aws_iam_policy" "eks-autoscale-policy" {
                 "autoscaling:DescribeLaunchConfigurations",
                 "autoscaling:SetDesiredCapacity",
                 "autoscaling:TerminateInstanceInAutoScalingGroup",
-                "ec2:DescribeLaunchTemplateVersions"
+                "ec2:DescribeLaunchTemplateVersions",
+                "ec2:DescribeVpcs",
+                "elasticloadbalancing:AddTags",
+                "elasticloadbalancing:CreateListener",
+                "elasticloadbalancing:CreateTargetGroup",
+                "elasticloadbalancing:DeleteListener",
+                "elasticloadbalancing:DeleteTargetGroup",
+                "elasticloadbalancing:DescribeListeners",
+                "elasticloadbalancing:DescribeLoadBalancerPolicies",
+                "elasticloadbalancing:DescribeTargetGroups",
+                "elasticloadbalancing:DescribeTargetHealth",
+                "elasticloadbalancing:ModifyListener",
+                "elasticloadbalancing:ModifyTargetGroup",
+                "elasticloadbalancing:RegisterTargets",
+                "elasticloadbalancing:SetLoadBalancerPoliciesOfListener"
             ],
             "Resource": "*"
         }

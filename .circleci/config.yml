@@ -24,7 +24,7 @@ anchors:
       command: |
         PATH="/home/circleci/.local/bin/:$PATH"
         source $HOME/.profile
-        #bash ./terraform_exec.sh 1
+        bash ./terraform_exec.sh 1
 
   destroy-infra: &destroy-infra
     run:
@@ -32,7 +32,7 @@ anchors:
       command: |
         PATH="/home/circleci/.local/bin/:$PATH"
         source $HOME/.profile
-        #bash ./terraform_exec.sh 2
+        bash ./terraform_exec.sh 2
 
   install-dependencies: &install-dependencies
     run:
@@ -73,7 +73,7 @@ workflows:
                 - dev
     jobs:
       - deployInfra:
-          context: ISENGARD-DEV
+          context: xerris-dev
 
   TriggerdevDestroy:
     triggers:
@@ -85,7 +85,7 @@ workflows:
                 - dev
     jobs:
       - destroyInfra:
-          context: ISENGARD-DEV
+          context: xerris-dev
 
   TriggerStageDeploy:
     triggers:
@@ -97,7 +97,7 @@ workflows:
                 - main
     jobs:
       - deployInfra:
-          context: ISENGARD-STAGE
+          context: xerris-stage
 
   TriggerStageDestroy:
     triggers:
@@ -109,12 +109,12 @@ workflows:
                 - main
     jobs:
       - destroyInfra:
-          context: ISENGARD-STAGE
+          context: xerris-stage
 
   devDeploy:
     jobs:
       - deployInfra:
-          context: ISENGARD-DEV
+          context: xerris-dev
           filters:
             branches:
               only:
@@ -124,7 +124,7 @@ workflows:
   devDestroy:
     jobs:
       - destroyInfra:
-          context: ISENGARD-DEV
+          context: xerris-dev
           filters:
             branches:
               only:
@@ -133,7 +133,7 @@ workflows:
   stageDeploy:
     jobs:
       - deployInfra:
-          context: ISENGARD-STAGE
+          context: xerris-stage
           filters:
             branches:
               only:
@@ -141,7 +141,7 @@ workflows:
   stageDestroy:
     jobs:
       - destroyInfra:
-          context: ISENGARD-STAGE
+          context: xerris-stage
           filters:
             branches:
               only:
@@ -158,7 +158,7 @@ workflows:
               only:
                 - /^v(\d+\.)?(\d+\.)?(\*|\d+)$/
       - deployInfra:
-          context: ISENGARD-PROD
+          context: xerris-prod
           filters:
             tags:
               only:
