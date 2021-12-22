@@ -8,7 +8,7 @@ This bootstrap creates a VPC and subnets, an RDS database and optional bastion h
 
 ## Pre-requisites.
  * [Terraform 0.15.1](https://releases.hashicorp.com/terraform/0.15.1/)
- * The  `.terraform-version` will be used by `tfenv` utility, also  `version.tf` works with `tfenv` . It will install if needed and switch to the Terrraform version specified.
+ * The  `.terraform-version` will be used by `tfenv` utility, also  `version.tf` works with `tfenv` . It will install if needed and switch to the Terraform version specified.
 
 * tfenv  0.15.5tfutils/tfenv
 
@@ -191,9 +191,9 @@ This bootstrap creates a VPC and subnets, an RDS database and optional bastion h
 
 * Edit file  terraform-eks-bootstrap/terraform_exec.sh
 
-    * Set the name of the S3 bucket and S3 Object name for your backend (Remeber AWS S3 bucket name is unique globally )
+    * Set the name of the S3 bucket and S3 Object name for your backend (Remember AWS S3 bucket name is unique globally )
 
-    * For example lets assume that the enviroment We want to deploy is dev you need to create a unique S3 bucket called `xerris-eks-terraform-state-dev ` and a DynamoDB table called `dev-xerris-eks-terraform-state-lock-dynamo`
+    * For example let's assume that the environment we want to deploy is dev you need to create a unique S3 bucket called `xerris-eks-terraform-state-dev ` and a DynamoDB table called `dev-xerris-eks-terraform-state-lock-dynamo`
 
     * Set the name of your DynamoDb table to control the locking for the state file.
         ```
