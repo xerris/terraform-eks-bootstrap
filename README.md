@@ -1,7 +1,7 @@
 # Terraform-eks-bootstrap
 
 ## Introduction
-This bootstrap creates a VPC and subnets, an RDS database and optional bastion host for accessing EKS worker nodes, if required. It also includes a module for a Cloudwatch alarm and SNS topic for billing purposes as well as basic IAM permissions for the EKS cluster.
+This bootstrap allows you to  create a VPC and subnets or pass by parameter existing VPC and subnets, also gives the possibility to create an RDS database and optional bastion host for accessing EKS worker nodes, if required. It also includes a module for a Cloudwatch alarm and SNS topic for billing purposes as well as basic IAM permissions for the EKS cluster.
 
 ## Blueprint
 ![Blueprint](eks_diagram.png "blueprint")
@@ -13,7 +13,7 @@ This bootstrap creates a VPC and subnets, an RDS database and optional bastion h
 * tfenv  0.15.5tfutils/tfenv
 
 ## Environment variables needed to execute this deployment.
-| Name | Value | Description |
+| Name |Value | Description |
 |------|---------|--------|
 |AWS_ACCESS_KEY_ID| n/a | n/a |
 |AWS_SECRET_ACCESS_KEY| n/a | n/a |
