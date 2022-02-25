@@ -23,7 +23,6 @@ commit_hash=`git rev-parse --short HEAD`
 #export TF_LOG=TRACE
 #export TF_VAR_commit_hash="${commit_hash}"
 #export TF_VAR_build_number="${build_number}"
-
 terraform init \
 -upgrade \
 -backend-config="bucket=xerris-eks-terraform-state-${ENV}" \
@@ -33,6 +32,7 @@ terraform init \
 
 
 terraform validate
+tfsec .
 terraform plan -var-file=envs/${ENV}.tfvars
 
 if [ $APPLY == 2 ]; then

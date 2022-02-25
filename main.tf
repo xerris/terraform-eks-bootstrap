@@ -121,9 +121,9 @@ resource "aws_security_group" "bastion" {
 
 module "ec2_cluster" {
   source                 = "terraform-aws-modules/ec2-instance/aws"
-  version                = "~> 2.0"
+  version = "3.3.0"
   name                   = "bastion-${var.env}"
-  instance_count         = var.create_bastion
+  count         = var.create_bastion
   ami           = data.aws_ami.amazon-linux-2-ami.id
   instance_type          = "t2.micro"
   key_name      = aws_key_pair.bastion_key_pair.key_name
@@ -145,6 +145,7 @@ module "project_eks_cluster" {
     aws_iam_group_policy_attachment.K8sDeveloper-group-policy-attach
     ]
   source          = "terraform-aws-modules/eks/aws"
+  version = "17.0.0"
   cluster_enabled_log_types = ["api", "audit", "authenticator", "scheduler"]
   cluster_name    = "${var.eks_cluster_name}-${var.env}"
   cluster_version = var.eks_cluster_version
@@ -182,6 +183,7 @@ resource "random_pet" "random" {
 
 resource "aws_eks_node_group" "project-eks-cluster-nodegroup" {
   count = length(local.subnet_ids)
+  version = "3.67.0"
   depends_on = [module.project_eks_cluster,
     aws_iam_role_policy_attachment.autoscale-AmazonEKSWorkerNodePolicy,
     aws_iam_role_policy_attachment.autoscale-AmazonEKS_CNI_Policy,
