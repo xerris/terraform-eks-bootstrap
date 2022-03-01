@@ -2,10 +2,10 @@ version: 2.1
 executors:
   terraform:
     docker:
-      - image: circleci/node:12.14.1
-orbs:
-  aws-cli: circleci/aws-cli@0.1.18
-  jq: circleci/jq@1.9.1
+      - image: atorresd/tfenv-tfsec-awscli-ubuntu-focal
+#orbs:
+#  aws-cli: circleci/aws-cli@0.1.18
+#  jq: circleci/jq@1.9.1
 
 anchors:
   configure-aws-access: &configure-aws-access
