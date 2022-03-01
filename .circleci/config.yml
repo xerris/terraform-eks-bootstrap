@@ -3,9 +3,7 @@ executors:
   terraform:
     docker:
       - image: atorresd/tfenv-tfsec-awscli-ubuntu-focal
-#orbs:
-#  aws-cli: circleci/aws-cli@0.1.18
-#  jq: circleci/jq@1.9.1
+
 
 anchors:
   configure-aws-access: &configure-aws-access
@@ -39,7 +37,7 @@ anchors:
       name: Install terraform
       command: |
         PATH="/home/circleci/.local/bin/:$PATH"
-        bash ./install_terraform.sh
+        bash ./install_kubectl.sh
 
 
 jobs:

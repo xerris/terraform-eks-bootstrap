@@ -1,12 +1,5 @@
 #!/bin/bash
 
-  #sudo apt-get update
-  #sudo apt-get install -y python3-pip
-  #pip3 install --user boto3 awscli
-  #sudo curl -o terraform_0.15.1_linux_amd64.zip https://releases.hashicorp.com/terraform/0.15.1/terraform_0.15.1_linux_amd64.zip
-  #sudo unzip -o terraform_0.15.1_linux_amd64.zip -d /bin
-  #export PATH=$PATH:./bin/
-
   export KUBE_LATEST_VERSION="v1.20.1"
   wget -q https://storage.googleapis.com/kubernetes-release/release/${KUBE_LATEST_VERSION}/bin/linux/amd64/kubectl -O /usr/local/bin/kubectl \
     && chmod +x /usr/local/bin/kubectl
