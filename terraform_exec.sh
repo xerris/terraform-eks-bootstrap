@@ -32,7 +32,7 @@ terraform init \
 
 
 terraform validate
-tfsec . --tfvars-file=envs/${ENV}.tfvars --concise-output --soft-fail
+
 terraform plan -var-file=envs/${ENV}.tfvars
 
 if [ $APPLY == 2 ]; then

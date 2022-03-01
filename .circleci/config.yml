@@ -34,10 +34,17 @@ anchors:
 
   install-dependencies: &install-dependencies
     run:
-      name: Install terraform
+      name: Install kubectl & helm
       command: |
         PATH="/home/circleci/.local/bin/:$PATH"
         bash ./install_kubectl.sh
+
+  run-tfsec: &run-tfsec
+    run:
+      name: Run Tfsec
+      command: |
+        PATH="/home/circleci/.local/bin/:$PATH"
+        tfsec . --tfvars-file=envs/${ENV}.tfvars --concise-output --soft-fail
 
 
 jobs:
@@ -48,6 +55,7 @@ jobs:
     steps:
       - checkout
       - *install-dependencies
+      - *run-tfsec
       - *configure-aws-access
       - *deploy-infra
 
