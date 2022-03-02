@@ -2,7 +2,7 @@ version: 2.1
 executors:
   terraform:
     docker:
-      - image: atorresd/tfenv-tfsec-awscli-ubuntu-focal
+      - image: public.ecr.aws/u7z2n6g0/xerris/tfenv-tfsec:latest
 
 
 anchors:
