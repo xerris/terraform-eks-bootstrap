@@ -48,3 +48,36 @@ if [ $APPLY == 1 ]; then
     echo "###############################"
     terraform apply --auto-approve -var-file=envs/${ENV}.tfvars -var="flux_token=${2}"
 fi
+
+### CI/CD installation ####
+echo "###############################"
+echo "## installing CI/CD Tool ##"
+echo "###############################"
+
+
+rm -rf .terraform
+cd cicd
+terraform init \
+-backend-config="bucket=project-eks-terraform-state-${ENV}" \
+-backend-config="key=${ENV}/project-eks-apps-bootstrap.tfstate" \
+-backend-config="dynamodb_table=${ENV}-project-eks-terraform-state-lock-dynamo" \
+-backend-config="region=${AWS_REGION}"
+
+
+terraform validate
+
+terraform plan -var-file=../envs/${ENV}.tfvars -var="flux_token=${2}"
+
+if [ $APPLY == 2 ]; then
+    echo "###############################"
+    echo "## Executing terraform destroy for CI/CD ##"
+    echo "###############################"
+    terraform destroy --auto-approve -var-file=../envs/${ENV}.tfvars -var="flux_token=${2}"
+fi
+
+if [ $APPLY == 1 ]; then
+    echo "###############################"
+    echo "## Executing terraform apply for CI/CD ##"
+    echo "###############################"
+    terraform apply --auto-approve -var-file=../envs/${ENV}.tfvars -var="flux_token=${2}"
+fi
