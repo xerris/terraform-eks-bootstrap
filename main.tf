@@ -145,7 +145,7 @@ module "project_eks_cluster" {
     aws_iam_group_policy_attachment.K8sDeveloper-group-policy-attach
     ]
   source          = "terraform-aws-modules/eks/aws"
-  version = "17.0.0"
+  version = "17.24.0"
   cluster_enabled_log_types = ["api", "audit", "authenticator", "scheduler"]
   cluster_name    = "${var.eks_cluster_name}-${var.env}"
   cluster_version = var.eks_cluster_version

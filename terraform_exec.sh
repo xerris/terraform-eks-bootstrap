@@ -35,13 +35,6 @@ terraform validate
 
 terraform plan -var-file=envs/${ENV}.tfvars -var="flux_token=${2}"
 
-if [ $APPLY == 2 ]; then
-    echo "###############################"
-    echo "## Executing terraform destroy ##"
-    echo "###############################"
-    terraform destroy --auto-approve -var-file=envs/${ENV}.tfvars -var="flux_token=${2}"
-fi
-
 if [ $APPLY == 1 ]; then
     echo "###############################"
     echo "## Executing terraform apply ##"
@@ -75,6 +68,20 @@ if [ $APPLY == 2 ]; then
     echo "## Executing terraform destroy for CI/CD ##"
     echo "###############################"
     terraform destroy --auto-approve -var-file=../envs/${ENV}.tfvars -var="flux_token=${2}"
+
+    echo "###############################"
+    echo "## Executing terraform destroy ##"
+    echo "###############################"
+    cd ..
+    terraform init \
+    -upgrade \
+    -backend-config="bucket=xerris-eks-terraform-state-${ENV}" \
+    -backend-config="key=${ENV}/xerris-eks-bootstrap.tfstate" \
+    -backend-config="dynamodb_table=${ENV}-xerris-eks-terraform-state-lock-dynamo" \
+    -backend-config="region=${AWS_REGION}"
+
+    terraform destroy --auto-approve -var-file=envs/${ENV}.tfvars -var="flux_token=${2}"
+
 fi
 
 if [ $APPLY == 1 ]; then
