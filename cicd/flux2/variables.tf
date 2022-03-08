@@ -40,7 +40,3 @@ variable "default_components" {
 variable "components" {
   type = list
 }
-
-variable "cluster_endpoint"{}
-variable "cluster_ca_cert" {}
-variable "cluster_name" {}

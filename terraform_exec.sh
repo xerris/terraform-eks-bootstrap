@@ -57,6 +57,8 @@ echo "###############################"
 
 rm -rf .terraform
 cd cicd
+aws eks update-kubeconfig --region $AWS_REGION --name project_eks_cluster-$ENV --kubeconfig "~/.kube/config"
+
 terraform init \
 -backend-config="bucket=project-eks-terraform-state-${ENV}" \
 -backend-config="key=${ENV}/project-eks-apps-bootstrap.tfstate" \

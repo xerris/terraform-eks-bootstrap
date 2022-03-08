@@ -1,6 +1,15 @@
 
 ## FLux variables ##
 
+variable "env" {
+    default =  "dev"
+}
+
+variable "region" {
+    default = "us-east-1"
+}
+
+
 variable "target_path" {
   default = "apps"
 }
