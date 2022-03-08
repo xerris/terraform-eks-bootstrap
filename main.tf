@@ -173,13 +173,6 @@ output "project_eks_cluster_id"{
   value = module.project_eks_cluster.cluster_id
 }
 
-output "eks_endpoint"{
-  value = module.project_eks_cluster.cluster_endpoint
-}
-
-output "eks_ca"{
-  value = module.project_eks_cluster.cluster_certificate_authority_data
-}
 
 resource "random_pet" "random" {
   count = length(local.subnet_ids)
@@ -191,7 +184,7 @@ resource "random_pet" "random" {
 
 resource "aws_eks_node_group" "project-eks-cluster-nodegroup" {
   count = length(local.subnet_ids)
-  version = "3.67.0"
+ # version = "3.74.3"
   depends_on = [module.project_eks_cluster,
     aws_iam_role_policy_attachment.autoscale-AmazonEKSWorkerNodePolicy,
     aws_iam_role_policy_attachment.autoscale-AmazonEKS_CNI_Policy,
@@ -350,14 +343,12 @@ module "flux2"{
     repo_url = "https://github.com/${var.github_owner}/${var.repository_name}"
     branch = var.branch
     flux_token  = var.flux_token
-    bucket       = var.infra_bucket[var.env]
-    key          = var.infra_file[var.env]
     region =  var.region
     repo_provider = var.repo_provider
     components = var.components
     default_components = var.default_components
     cluster_name = "${var.eks_cluster_name}-${var.env}"
-    cluster_endpoint = output.eks_endpoint.value
-    cluster_ca_cert = output.eks_ca.value
+    cluster_endpoint = module.project_eks_cluster.cluster_endpoint
+    cluster_ca_cert = module.project_eks_cluster.cluster_certificate_authority_data
 
 }
