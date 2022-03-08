@@ -10,8 +10,4 @@ module "flux2"{
     repo_provider = var.repo_provider
     components = var.components
     default_components = var.default_components
-    #cluster_name = "${var.eks_cluster_name}-${var.env}"
-    #cluster_endpoint = module.project_eks_cluster.cluster_endpoint
-    #cluster_ca_cert = module.project_eks_cluster.cluster_certificate_authority_data
-
 }
