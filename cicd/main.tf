@@ -1,5 +1,5 @@
 module "flux2"{
-    count = var.flux2 ? 1 : 0
+    #count = var.flux2 ? 1 : 0
     source = "./flux2"
     target_path = "${var.target_path}/${var.env}"
     repository_name = "terraform-eks-apps-bootstrap"
