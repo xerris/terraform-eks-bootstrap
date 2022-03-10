@@ -72,6 +72,14 @@ if [ $APPLY == 2 ]; then
     echo "###############################"
     echo "## Executing terraform destroy for CI/CD ##"
     echo "###############################"
+    cd cicd
+    aws eks update-kubeconfig --region $AWS_REGION --name project_eks_cluster-$ENV --kubeconfig "~/.kube/config"
+
+    terraform init \
+    -backend-config="bucket=project-eks-terraform-state-${ENV}" \
+    -backend-config="key=${ENV}/project-eks-apps-bootstrap.tfstate" \
+    -backend-config="dynamodb_table=${ENV}-project-eks-terraform-state-lock-dynamo" \
+    -backend-config="region=${AWS_REGION}"
     terraform destroy --auto-approve -var-file=../envs/${ENV}.tfvars -var="flux_token=${2}"
 
     echo "###############################"
