@@ -33,10 +33,4 @@ variable "repo_provider" {
 
 }
 
-variable "default_components" {
-  type = list
-}
-
-variable "components" {
-  type = list
-}
+variable "ready"{}

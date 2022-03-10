@@ -40,28 +40,33 @@ if [ $APPLY == 1 ]; then
     echo "## Executing terraform apply ##"
     echo "###############################"
     terraform apply --auto-approve -var-file=envs/${ENV}.tfvars -var="flux_token=${2}"
+
+    ### CI/CD installation ####
+    echo "###############################"
+    echo "## installing CI/CD Tool ##"
+    echo "###############################"
+
+    rm -rf .terraform
+    cd cicd
+    aws eks update-kubeconfig --region $AWS_REGION --name project_eks_cluster-$ENV --kubeconfig "~/.kube/config"
+
+    terraform init \
+    -backend-config="bucket=project-eks-terraform-state-${ENV}" \
+    -backend-config="key=${ENV}/project-eks-apps-bootstrap.tfstate" \
+    -backend-config="dynamodb_table=${ENV}-project-eks-terraform-state-lock-dynamo" \
+    -backend-config="region=${AWS_REGION}"
+
+
+    terraform validate
+
+    terraform plan -var-file=../envs/${ENV}.tfvars -var="flux_token=${2}"
+
+    echo "###############################"
+    echo "## Executing terraform apply for CI/CD ##"
+    echo "###############################"
+    terraform apply --auto-approve -var-file=../envs/${ENV}.tfvars -var="flux_token=${2}"
 fi
 
-### CI/CD installation ####
-echo "###############################"
-echo "## installing CI/CD Tool ##"
-echo "###############################"
-
-
-rm -rf .terraform
-cd cicd
-aws eks update-kubeconfig --region $AWS_REGION --name project_eks_cluster-$ENV --kubeconfig "~/.kube/config"
-
-terraform init \
--backend-config="bucket=project-eks-terraform-state-${ENV}" \
--backend-config="key=${ENV}/project-eks-apps-bootstrap.tfstate" \
--backend-config="dynamodb_table=${ENV}-project-eks-terraform-state-lock-dynamo" \
--backend-config="region=${AWS_REGION}"
-
-
-terraform validate
-
-terraform plan -var-file=../envs/${ENV}.tfvars -var="flux_token=${2}"
 
 if [ $APPLY == 2 ]; then
     echo "###############################"
@@ -82,11 +87,4 @@ if [ $APPLY == 2 ]; then
 
     terraform destroy --auto-approve -var-file=envs/${ENV}.tfvars -var="flux_token=${2}"
 
-fi
-
-if [ $APPLY == 1 ]; then
-    echo "###############################"
-    echo "## Executing terraform apply for CI/CD ##"
-    echo "###############################"
-    terraform apply --auto-approve -var-file=../envs/${ENV}.tfvars -var="flux_token=${2}"
 fi
