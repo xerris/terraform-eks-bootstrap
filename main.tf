@@ -199,7 +199,7 @@ resource "aws_eks_node_group" "project-eks-cluster-nodegroup" {
   capacity_type = var.cluster_node_billing_mode
   force_update_version = true
   scaling_config {
-    desired_size = var.cluster_min_node_count
+    desired_size = var.cluster_min_node_count+1
     max_size     = var.cluster_max_node_count
     min_size     = var.cluster_min_node_count
   }
