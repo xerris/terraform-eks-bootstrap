@@ -203,7 +203,9 @@ resource "aws_eks_node_group" "project-eks-cluster-nodegroup" {
     max_size     = var.cluster_max_node_count
     min_size     = var.cluster_min_node_count
   }
-
+  update_config {
+    max_unavailable = 2
+  }
   tags = {
     Owner       = var.owner_tag
     Environment = var.env
