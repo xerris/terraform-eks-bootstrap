@@ -18,13 +18,13 @@ module "flux_repo_2048"{
 }
 
 
-#module "flux_repo_addons"{
-#    source = "./flux2/flux2_repos"
-#    repository_name = "kubernetes-addons-bootstrap"
-#    repo_url = "https://github.com/${var.github_owner}/${var.repository_name}"
-#    branch = var.branch
-#    flux_token  = var.flux_token
-#    repo_provider = var.repo_provider
-#    region =  var.region
-#    ready = module.flux2_crd.manifest_ready
-#}
+module "flux_repo_addons"{
+    source = "./flux2/flux2_repos"
+    repository_name = "kubernetes-addons-bootstrap"
+    repo_url = "https://github.com/${var.github_owner}/kubernetes-addons-bootstrap"
+    branch = var.branch
+    flux_token  = var.flux_token
+    repo_provider = var.repo_provider
+    region =  var.region
+    ready = module.flux2_crd.manifest_ready
+}
