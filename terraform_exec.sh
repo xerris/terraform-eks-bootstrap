@@ -47,7 +47,7 @@ if [ $APPLY == 1 ]; then
     echo "###############################"
 
     rm -rf .terraform
-    cd cicd
+    pushd cicd
     aws eks update-kubeconfig --region $AWS_REGION --name project_eks_cluster-$ENV --kubeconfig "~/.kube/config"
 
     terraform init \
@@ -72,7 +72,7 @@ if [ $APPLY == 2 ]; then
     echo "###############################"
     echo "## Executing terraform destroy for CI/CD ##"
     echo "###############################"
-    cd cicd
+    pushd cicd
     aws eks update-kubeconfig --region $AWS_REGION --name project_eks_cluster-$ENV --kubeconfig "~/.kube/config"
 
     terraform init \
@@ -85,7 +85,7 @@ if [ $APPLY == 2 ]; then
     echo "###############################"
     echo "## Executing terraform destroy ##"
     echo "###############################"
-    cd ..
+    popd
     terraform init \
     -upgrade \
     -backend-config="bucket=xerris-eks-terraform-state-${ENV}" \
