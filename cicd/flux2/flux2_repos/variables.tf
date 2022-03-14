@@ -1,5 +1,5 @@
 variable "target_path" {
-  default = "apps"
+  default = "overlays"
 }
 variable "github_owner" {
   default = "xerris"
