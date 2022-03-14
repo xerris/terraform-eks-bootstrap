@@ -68,6 +68,7 @@ data "flux_sync" "main" {
   branch      = local.flux2["flux_sync_branch"] != "" ? local.flux2["flux_sync_branch"] : local.flux2["branch"]
   namespace   = local.flux2["namespace"]
   name = local.flux2["repository"]
+  secret = "${local.flux2["repository"]}-secret"
 }
 
 # Split multi-doc YAML with

@@ -57,7 +57,7 @@ map_users = [
 
 target_path = "/overlays"
 github_owner = "xerris"
-repository_name = "2048-k8-app, kubernetes-addons-bootstrap"
+repository_name = "2048-k8-app"
 branch= "dev, main"
 repo_provider =  "github"
 default_components = ["source-controller", "kustomize-controller", "notification-controller"]
