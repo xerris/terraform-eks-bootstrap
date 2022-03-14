@@ -22,7 +22,7 @@ variable "repository_name" {
 variable "flux_token" {}
 
 variable "branch" {
-  default = "main"
+  default = "dev"
 }
 
 variable "repo_provider" {

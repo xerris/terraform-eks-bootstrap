@@ -11,6 +11,7 @@ module "flux_repo_2048"{
     repository_name = "2048-k8-app"
     repo_url = "https://github.com/${var.github_owner}/${var.repository_name}"
     branch = var.branch
+    target_path = "${var.target_path}/${var.env}"
     flux_token  = var.flux_token
     repo_provider = var.repo_provider
     region =  var.region
@@ -23,6 +24,7 @@ module "flux_repo_addons"{
     repository_name = "kubernetes-addons-bootstrap"
     repo_url = "https://github.com/${var.github_owner}/kubernetes-addons-bootstrap"
     branch = var.branch
+    target_path = "${var.target_path}/${var.env}"
     flux_token  = var.flux_token
     repo_provider = var.repo_provider
     region =  var.region
