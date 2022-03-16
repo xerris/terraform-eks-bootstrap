@@ -37,7 +37,7 @@ locals {
       namespace                = "flux2-system"
       target_path              = var.target_path
       default_network_policy   = true
-      version                  = "v0.14.2"
+      version                  = "v0.27.3"
       repo_url               = var.repo_url
       create_github_repository = false
       repository               = var.repository_name
