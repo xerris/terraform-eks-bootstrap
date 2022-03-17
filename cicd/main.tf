@@ -15,6 +15,7 @@ module "flux_repo_2048"{
     flux_token  = var.flux_token
     repo_provider = var.repo_provider
     region =  var.region
+    github_user = var.github_user
     ready = module.flux2_crd.manifest_ready
 }
 
@@ -28,5 +29,6 @@ module "flux_repo_addons"{
     flux_token  = var.flux_token
     repo_provider = var.repo_provider
     region =  var.region
+    github_user = var.github_user
     ready = module.flux2_crd.manifest_ready
 }

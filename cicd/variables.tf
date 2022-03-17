@@ -16,6 +16,9 @@ variable "target_path" {
 variable "github_owner" {
   default = "xerris"
 }
+
+variable "github_user"{}
+
 variable "repository_name" {
   default = "terraform-eks-apps-bootstrap"
 }

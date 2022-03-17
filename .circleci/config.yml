@@ -22,7 +22,7 @@ anchors:
       command: |
         PATH="/home/circleci/.local/bin/:$PATH"
         source $HOME/.profile
-        bash ./terraform_exec.sh 1 $FLUX_TOKEN
+        bash ./terraform_exec.sh 1 $FLUX_TOKEN $GITHUB_USER
 
   destroy-infra: &destroy-infra
     run:
@@ -30,7 +30,7 @@ anchors:
       command: |
         PATH="/home/circleci/.local/bin/:$PATH"
         source $HOME/.profile
-        bash ./terraform_exec.sh 2 $FLUX_TOKEN
+        bash ./terraform_exec.sh 2 $FLUX_TOKEN $GITHUB_USER
 
   install-dependencies: &install-dependencies
     run:

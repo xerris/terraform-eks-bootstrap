@@ -29,17 +29,17 @@ terraform init \
 -backend-config="key=${ENV}/xerris-eks-bootstrap.tfstate" \
 -backend-config="dynamodb_table=${ENV}-xerris-eks-terraform-state-lock-dynamo" \
 -backend-config="region=${AWS_REGION}"
-
+export DESTROY=""
 
 terraform validate
-
-terraform plan -var-file=envs/${ENV}.tfvars -var="flux_token=${2}"
+if [ $APPLY == 2 ]; then export DESTROY="-destroy"; fi
+terraform plan $DESTROY -var-file=envs/${ENV}.tfvars
 
 if [ $APPLY == 1 ]; then
     echo "###############################"
     echo "## Executing terraform apply ##"
     echo "###############################"
-    terraform apply --auto-approve -var-file=envs/${ENV}.tfvars -var="flux_token=${2}"
+    terraform apply --auto-approve -var-file=envs/${ENV}.tfvars
 
     ### CI/CD installation ####
     echo "###############################"
@@ -59,12 +59,12 @@ if [ $APPLY == 1 ]; then
 
     terraform validate
 
-    terraform plan -var-file=../envs/${ENV}.tfvars -var="flux_token=${2}"
+    terraform plan -var-file=../envs/${ENV}.tfvars -var="flux_token=${2}" -var="github_user=${3}"
 
     echo "###############################"
     echo "## Executing terraform apply for CI/CD ##"
     echo "###############################"
-    terraform apply --auto-approve -var-file=../envs/${ENV}.tfvars -var="flux_token=${2}"
+    terraform apply --auto-approve -var-file=../envs/${ENV}.tfvars -var="flux_token=${2}" -var="github_user=${3}"
 fi
 
 
@@ -80,7 +80,7 @@ if [ $APPLY == 2 ]; then
     -backend-config="key=${ENV}/xerris-eks-apps-bootstrap.tfstate" \
     -backend-config="dynamodb_table=${ENV}-xerris-eks-terraform-state-lock-dynamo" \
     -backend-config="region=${AWS_REGION}"
-    terraform destroy --auto-approve -var-file=../envs/${ENV}.tfvars -var="flux_token=${2}"
+    terraform destroy --auto-approve -var-file=../envs/${ENV}.tfvars -var="flux_token=${2}" -var="github_user=${3}"
 
     echo "###############################"
     echo "## Executing terraform destroy ##"
@@ -93,6 +93,6 @@ if [ $APPLY == 2 ]; then
     -backend-config="dynamodb_table=${ENV}-xerris-eks-terraform-state-lock-dynamo" \
     -backend-config="region=${AWS_REGION}"
 
-    terraform destroy --auto-approve -var-file=envs/${ENV}.tfvars -var="flux_token=${2}"
+    terraform destroy --auto-approve -var-file=envs/${ENV}.tfvars
 
 fi

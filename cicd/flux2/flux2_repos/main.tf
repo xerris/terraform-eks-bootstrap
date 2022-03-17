@@ -93,7 +93,7 @@ resource "kubernetes_secret" "main" {
   }
 
   data = {
-    username = "andrestorresGL"
+    username = var.github_user
     password = var.flux_token
   }
 

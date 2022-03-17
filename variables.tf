@@ -239,7 +239,6 @@ variable "github_owner" {
 variable "repository_name" {
   default = "terraform-eks-apps-bootstrap"
 }
-variable "flux_token" {}
 
 variable "branch" {
   default = "main"
