@@ -1,5 +1,9 @@
 variable "env" {
-    default =  "dev"
+  default = "dev"
+}
+
+variable "project" {
+  default = "xerris_internal"
 }
 
 variable "create_vpc" {
@@ -10,48 +14,48 @@ variable "vpc_id" {
   default = ""
 }
 
-variable "cluster_public_access"{
+variable "cluster_public_access" {
   type = bool
 }
 
-variable "cni_enabled"{
+variable "cni_enabled" {
   type = bool
 }
 
-variable "eks_master_role"{
+variable "eks_master_role" {
   type = string
 }
 
 variable "private_subnets_ids" {
   default = []
-  type = list
+  type    = list(any)
 }
 
 variable "public_subnets_ids" {
   default = []
-  type = list
+  type    = list(any)
 }
 
 variable "region" {
-    default = "us-east-1"
+  default = "us-east-1"
 }
 
 variable "vpc_name" {
-    default = "project_eks_vpc"
+  default = "project_eks_vpc"
 }
 
 variable "vpc_cidr" {
-    default = "10.1.0.0/16"
+  default = "10.1.0.0/16"
 }
 
-variable "private_subnets"{
-    type = list
-    default = ["10.1.1.0/24","10.1.2.0/24"]
+variable "private_subnets" {
+  type    = list(any)
+  default = ["10.1.1.0/24", "10.1.2.0/24"]
 }
 
-variable "public_subnets"{
-    type = list
-    default = ["10.1.3.0/24","10.1.4.0/24"]
+variable "public_subnets" {
+  type    = list(any)
+  default = ["10.1.3.0/24", "10.1.4.0/24"]
 }
 
 variable "enable_natgateway" {
@@ -64,47 +68,47 @@ variable "enable_vpngateway" {
 
 variable "external_nat_ip_ids" {
   default = [""]
-  type = list
+  type    = list(any)
 }
 variable "count_eip_nat" {
   default = 1
 }
 
 variable "owner_tag" {
-    default = "DevOps Team"
+  default = "DevOps Team"
 }
 
-variable "ecr_name"{
-    default =  "project_eks_ecr"
+variable "ecr_name" {
+  default = "project_eks_ecr"
 }
 
 variable "eks_cluster_name" {
-    default = "project_eks_cluster"
+  default = "project_eks_cluster"
 }
 
 variable "eks_cluster_version" {
-    default = "1.19.8"
+  default = "1.19.8"
 }
 
 variable "cluster_min_node_count" {
-    default = 1
+  default = 1
 }
 
 variable "cluster_max_node_count" {
-    default = 2
+  default = 2
 }
 
 variable "cluster_node_instance_type" {
-  type        = list(string)
+  type    = list(string)
   default = []
 }
 
 variable "cluster_node_billing_mode" {
-    default = "SPOT" #ON_DEMAND
+  default = "SPOT" #ON_DEMAND
 }
 
-variable "cluster_node_disk_size"{
-    default = "200"
+variable "cluster_node_disk_size" {
+  default = "200"
 }
 
 variable "create_bastion" {
@@ -112,23 +116,23 @@ variable "create_bastion" {
 }
 
 variable "bucket_cluster_logs_name" {
-    default = "project_eks_logs"
+  default = "project_eks_logs"
 }
 
 variable "cluster_logs_path" {
-    default = "cluster_logs"
+  default = "cluster_logs"
 }
 
 variable "node_logs_path" {
-    default = "node_logs"
+  default = "node_logs"
 }
 
 variable "monthly_billing_threshold" {
-    default = 500
+  default = 500
 }
 
 variable "billing_currency" {
-    default = "USD"
+  default = "USD"
 }
 
 variable "map_accounts" {
@@ -165,22 +169,22 @@ variable "role_name" {
 }
 
 variable "api_groups" {
-  type    = list
+  type    = list(any)
   default = []
 }
 
 variable "resources" {
-  type    = list
+  type    = list(any)
   default = []
 }
 
 variable "resource_names" {
-  type    = list
+  type    = list(any)
   default = []
 }
 
 variable "actions" {
-  type    = list
+  type    = list(any)
   default = []
 }
 
@@ -197,16 +201,20 @@ variable "dev_users" {
   default = []
 }
 
+variable "create_db" {
+  default = false
+}
+
 variable "rds_cluster_name" {
 
 }
 
 variable "rds_engine" {
- default = "aurora-mysql"
+  default = "aurora-mysql"
 }
 
 variable "engine_version" {
-  default =  "5.7.mysql_aurora.2.03.2"
+  default = "5.7.mysql_aurora.2.03.2"
 
 }
 
@@ -249,9 +257,9 @@ variable "repo_provider" {
 }
 
 variable "default_components" {
-  type = list
+  type = list(any)
 }
 
 variable "components" {
-  type = list
+  type = list(any)
 }

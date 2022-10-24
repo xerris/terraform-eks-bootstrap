@@ -67,8 +67,8 @@ data "flux_sync" "main" {
   url         = local.flux2["repo_url"]
   branch      = local.flux2["flux_sync_branch"] != "" ? local.flux2["flux_sync_branch"] : local.flux2["branch"]
   namespace   = local.flux2["namespace"]
-  name = local.flux2["repository"]
-  secret = "${local.flux2["repository"]}-secret"
+  name = "${local.flux2["repository"]}-${local.flux2["branch"]}"
+  secret = "${local.flux2["repository"]}-${local.flux2["branch"]}-secret"
 }
 
 # Split multi-doc YAML with
@@ -88,7 +88,7 @@ resource "kubectl_manifest" "sync" {
 resource "kubernetes_secret" "main" {
   count      = local.flux2["enabled"] ? 1 : 0
   metadata {
-    name      =  "${local.flux2["repository"]}-${local.flux2["branch"]}-secret"
+    name      = data.flux_sync.main[0].secret
     namespace = data.flux_sync.main[0].namespace
   }
 
@@ -112,7 +112,7 @@ data "github_repository" "main" {
   full_name  = "${var.github_owner}/${var.repository_name}"
 }
 
-resource "github_branch_default" "main" {
+resource "github_branch" "main" {
   count      = local.flux2["enabled"] && local.flux2["create_github_repository"] && (local.flux2["provider"] == "github") ? 1 : 0
   repository = local.flux2["create_github_repository"] ? github_repository.main[0].name : data.github_repository.main[0].name
   branch     = local.flux2["branch"]
