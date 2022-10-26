@@ -35,6 +35,7 @@ module "eks_blueprints_kubernetes_addons" {
   enable_aws_cloudwatch_metrics        = true
   enable_prometheus                    = true
   enable_amazon_prometheus             = true
+  enable_app_2048                      = true
   amazon_prometheus_workspace_endpoint = module.managed_prometheus.workspace_prometheus_endpoint
 
   #K8s Add-ons
@@ -65,16 +66,16 @@ module "eks_blueprints_kubernetes_addons" {
   #    }
   #  ]
   #}
-  prometheus_helm_config = {
-    name       = "prometheus"                                         # (Required) Release name.
-    repository = "https://prometheus-community.github.io/helm-charts" # (Optional) Repository URL where to locate the requested chart.
-    chart      = "prometheus"                                         # (Required) Chart name to be installed.
-    version    = "15.10.1"                                            # (Optional) Specify the exact chart version to install. If this is not specified, it defaults to the version set within default_helm_config: https://github.com/aws-ia/terraform-aws-eks-blueprints/blob/main/modules/kubernetes-addons/prometheus/locals.tf
-    namespace  = "prometheus"                                         # (Optional) The namespace to install the release into.
-    #values = [templatefile("${path.module}/prometheus-values.yaml", {
-    #  operating_system = "linux"
-    #})]
-  }
+  #prometheus_helm_config = {
+  #  name       = "prometheus"                                         # (Required) Release name.
+  #  repository = "https://prometheus-community.github.io/helm-charts" # (Optional) Repository URL where to locate the requested chart.
+  #  chart      = "prometheus"                                         # (Required) Chart name to be installed.
+  #  version    = "15.10.1"                                            # (Optional) Specify the exact chart version to install. If this is not specified, it defaults to the version set within default_helm_config: https://github.com/aws-ia/terraform-aws-eks-blueprints/blob/main/modules/kubernetes-addons/prometheus/locals.tf
+  #  namespace  = "prometheus"                                         # (Optional) The namespace to install the release into.
+  #  #values = [templatefile("${path.module}/prometheus-values.yaml", {
+  #  #  operating_system = "linux"
+  #  #})]
+  #}
 
   amazon_eks_kube_proxy_config = {
     addon_version     = data.aws_eks_addon_version.default["kube-proxy"].version

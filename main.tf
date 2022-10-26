@@ -61,7 +61,7 @@ locals {
     {
       rolearn  = aws_iam_role.eks-default-role.arn
       username = "system:node:{{EC2PrivateDNSName}}"
-      groups   = ["system:bootstrappers", "system:nodes", "system:masters"]
+      groups   = ["system:bootstrappers", "system:nodes"]
     },
     {
       rolearn  = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/aws-service-role/eks.amazonaws.com/AWSServiceRoleForAmazonEKS"
