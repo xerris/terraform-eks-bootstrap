@@ -14,6 +14,17 @@ variable "vpc_id" {
   default = ""
 }
 
+variable "create_managed_prometheus"{
+  type = bool
+  default = false
+}
+
+variable "install_addons"{
+  type = bool
+  default = false
+}
+
+
 variable "cluster_public_access" {
   type = bool
 }
