@@ -12,7 +12,7 @@ variable "flux_token" {}
 variable "branch" {
   default = "main"
 }
-
+variable "github_user"{}
 variable "region"{}
 variable "flux2" {
   description = "Customize Flux chart, see `flux2.tf` for supported values"

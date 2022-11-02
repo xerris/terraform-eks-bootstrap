@@ -1,8 +1,9 @@
 env = "dev"
 create_vpc = true
-region = "ca-central-1"
+region = "us-east-1"
 vpc_name = "project_eks_vpc"
 vpc_cidr = "10.1.0.0/16"
+project = "xerris"
 #vpc_id   = "vpc-088c6886a69f9c128"
 #private_subnets_ids = ["subnet-0e6c47a42ca1d4920"]
 #public_subnets_ids = ["subnet-0e6c47a42ca1d4920"]
@@ -16,10 +17,10 @@ count_eip_nat = 1
 owner_tag = "Xerris DevOps Team"
 ecr_name = "project_eks_ecr"
 eks_cluster_name = "project_eks_cluster"
-eks_cluster_version  = "1.21"
-cluster_min_node_count = 2
-cluster_max_node_count = 4
-cluster_node_instance_type = ["t3a.medium","t3a.large"]
+eks_cluster_version  = "1.23"
+cluster_min_node_count = 1
+cluster_max_node_count = 3
+cluster_node_instance_type = ["t3a.medium","t3a.xlarge"]
 cluster_node_billing_mode = "SPOT"
 cluster_node_disk_size = "200"
 bucket_cluster_logs_name = "project_eks_logs"
@@ -31,11 +32,11 @@ create_bastion = 1
 rds_cluster_name = "project-eks-rds"
 db_name = "projecteksdb"
 db_master_user = "projecteksmasteruser"
-eks_master_role = "arn:aws:iam::370365354210:group/xerris-developer"
+eks_master_role = "arn:aws:iam::370365354210:role/aws-reserved/sso.amazonaws.com/AWSReservedSSO_AWSAdministratorAccess_c87e108deaf1b7ca"
 map_roles = [
   #{
-  #  rolearn  = "arn:aws:iam::471337104212:role/project_eks_cluster-dev-K8sFullAdmin"
-  #  username = "project_eks_cluster-dev-K8sFullAdmin"
+  #  rolearn  = "arn:aws:iam::471337104212:role/observability_eks_cluster-dev-K8sFullAdmin"
+  #  username = "observability_eks_cluster-dev-K8sFullAdmin"
   #  groups   = ["system:masters"]
   #}
   ]
@@ -48,7 +49,7 @@ map_users = [
   },
   {
     userarn  = "arn:aws:iam::370365354210:user/andres"
-    username = "project_eks_cluster-dev-K8sFullAdmin"
+    username = "observability_eks_cluster-dev-K8sFullAdmin"
     groups   = ["system:masters"]
   }
 ]

@@ -5,3 +5,5 @@ kubeconfig*
 *.csv
 aws-iam-*
 .vs*
+cicd/.terraform/**
+cicd/.terraform.lock*
