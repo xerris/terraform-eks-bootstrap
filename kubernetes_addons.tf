@@ -35,7 +35,7 @@ module "eks_blueprints_kubernetes_addons" {
   enable_aws_efs_csi_driver            = false
   enable_aws_cloudwatch_metrics        = true
   enable_prometheus                    = true
-  enable_amazon_prometheus             = true
+  enable_amazon_prometheus             = var.create_managed_prometheus
   enable_app_2048                      = true
   amazon_prometheus_workspace_endpoint = module.managed_prometheus.workspace_prometheus_endpoint
 
