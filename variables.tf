@@ -86,15 +86,15 @@ variable "count_eip_nat" {
 }
 
 variable "owner_tag" {
-  default = "DevOps Team"
+  default = "Ginu"
 }
 
 variable "ecr_name" {
-  default = "project_eks_ecr"
+  default = "project_eks_ecr_ginu"
 }
 
 variable "eks_cluster_name" {
-  default = "project_eks_cluster"
+  default = "project_eks_cluster_ginu"
 }
 
 variable "eks_cluster_version" {
@@ -256,11 +256,11 @@ variable "github_owner" {
   default = "xerris"
 }
 variable "repository_name" {
-  default = "terraform-eks-apps-bootstrap"
+  default = "terraform-eks-apps-bootstrap-ginu"
 }
 
 variable "branch" {
-  default = "main"
+  default = "XDP-117-Ginu"
 }
 
 variable "repo_provider" {
