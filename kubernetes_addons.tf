@@ -13,7 +13,7 @@ data "aws_eks_addon_version" "default" {
   kubernetes_version = module.project_eks_cluster.cluster_version
   most_recent        = false
 }
-/*
+
 module "eks_blueprints_kubernetes_addons" {
   depends_on = [
     #aws_route53_zone.ens_hosted_zone,
@@ -200,7 +200,7 @@ module "eks_blueprints_kubernetes_addons" {
 
 }
 
-*/
+
 module "managed_prometheus" {
   source          = "terraform-aws-modules/managed-service-prometheus/aws"
   version         = "~> 2.1"
