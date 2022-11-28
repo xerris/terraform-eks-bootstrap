@@ -1,5 +1,5 @@
 variable "env" {
-  default = "dev"
+  default = "dev-allen"
 }
 
 variable "project" {
@@ -14,13 +14,13 @@ variable "vpc_id" {
   default = ""
 }
 
-variable "create_managed_prometheus"{
-  type = bool
+variable "create_managed_prometheus" {
+  type    = bool
   default = false
 }
 
-variable "install_addons"{
-  type = bool
+variable "install_addons" {
+  type    = bool
   default = false
 }
 
