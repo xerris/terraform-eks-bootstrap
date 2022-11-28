@@ -7,7 +7,7 @@ echo "###############################"
 echo "## Starting Terraform script ##"
 echo "###############################"
 
-ENV="${ENV:-dev-allen}"
+ENV="${ENV:dev-allen}"
 AWS_REGION="${AWS_REGION:-us-east-1}"
 echo "Configuring AWS Profiles"
 export AWS_PROFILE=default
@@ -25,9 +25,9 @@ commit_hash=`git rev-parse --short HEAD`
 #export TF_VAR_build_number="${build_number}"
 terraform init \
 --upgrade \
--backend-config="bucket=xerris-eks-terraform-state" \
+-backend-config="bucket=project-terraform-state-${ENV}" \
 -backend-config="key=${ENV}/xerris-eks-bootstrap.tfstate" \
--backend-config="dynamodb_table=${ENV}-xerris-eks-terraform-state-lock-dynamo" \
+-backend-config="dynamodb_table=${ENV}-terraform-state-lock-dynamo" \
 -backend-config="region=${AWS_REGION}"
 export DESTROY=""
 
@@ -53,7 +53,7 @@ if [ $APPLY == 1 ]; then
     terraform init \
     -backend-config="bucket=xerris-eks-terraform-state" \
     -backend-config="key=${ENV}/xerris-eks-apps-bootstrap.tfstate" \
-    -backend-config="dynamodb_table=${ENV}-xerris-eks-terraform-state-lock-dynamo" \
+    -backend-config="dynamodb_table=${ENV}-terraform-state-lock-dynamo" \
     -backend-config="region=${AWS_REGION}"
 
 
@@ -76,9 +76,9 @@ if [ $APPLY == 2 ]; then
     aws eks update-kubeconfig --region $AWS_REGION --name observability_eks_cluster-$ENV --kubeconfig "~/.kube/config"
 
     terraform init \
-    -backend-config="bucket=project-eks-terraform-state" \
+    -backend-config="bucket=project-terraform-state-${ENV}" \
     -backend-config="key=${ENV}/project-eks-apps-bootstrap.tfstate" \
-    -backend-config="dynamodb_table=${ENV}-project-eks-terraform-state-lock-dynamo" \
+    -backend-config="dynamodb_table=${ENV}-terraform-state-lock-dynamo" \
     -backend-config="region=${AWS_REGION}"
     terraform destroy --auto-approve -var-file=../envs/${ENV}.tfvars -var="flux_token=${2}" -var="github_user=${3}"
 
@@ -88,9 +88,9 @@ if [ $APPLY == 2 ]; then
     popd
     terraform init \
     -upgrade \
-    -backend-config="bucket=project-eks-terraform-state" \
+    -backend-config="bucket=project-terraform-state-${ENV}" \
     -backend-config="key=${ENV}/project-eks-bootstrap.tfstate" \
-    -backend-config="dynamodb_table=${ENV}-project-eks-terraform-state-lock-dynamo" \
+    -backend-config="dynamodb_table=${ENV}-terraform-state-lock-dynamo" \
     -backend-config="region=${AWS_REGION}"
 
     terraform destroy --auto-approve -var-file=envs/${ENV}.tfvars
