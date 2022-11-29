@@ -274,3 +274,7 @@ variable "default_components" {
 variable "components" {
   type = list(any)
 }
+
+variable "name" {
+  default = "allen"
+}

@@ -212,5 +212,6 @@ module "managed_prometheus" {
     Project     = var.project
     Environment = var.env
     Terraform   = true
+    Name        = var.name
   }
 }
