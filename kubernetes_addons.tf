@@ -38,7 +38,7 @@ module "eks_blueprints_kubernetes_addons" {
   enable_prometheus                    = true
   enable_amazon_prometheus             = var.create_managed_prometheus
   enable_app_2048                      = true
-  amazon_prometheus_workspace_endpoint = module.managed_prometheus.workspace_prometheus_endpoint
+  #amazon_prometheus_workspace_endpoint = module.managed_prometheus.workspace_prometheus_endpoint
 
   #K8s Add-ons
   enable_argocd                       = false
