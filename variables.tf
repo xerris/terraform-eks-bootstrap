@@ -52,7 +52,7 @@ variable "region" {
 }
 
 variable "vpc_name" {
-  default = "project_eks_vpc"
+  default = "project_eks_vpc_Ginu"
 }
 
 variable "vpc_cidr" {

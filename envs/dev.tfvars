@@ -1,7 +1,7 @@
 env = "dev"
 create_vpc = true
 region = "us-east-1"
-vpc_name = "project_eks_vpc"
+vpc_name = "project_eks_vpc_Ginu"
 vpc_cidr = "10.1.0.0/16"
 project = "xerris"
 #vpc_id   = "vpc-088c6886a69f9c128"
