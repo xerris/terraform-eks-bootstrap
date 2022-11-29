@@ -170,7 +170,7 @@ module "project_eks_cluster" {
   map_roles                                      = concat(var.map_roles, local.map_role)
   map_users                                      = var.map_users
   map_accounts                                   = var.map_accounts
-  enable_irsa                                    = true
+  enable_irsa                                    = false
   attach_worker_cni_policy                       = var.cni_enabled
   cluster_endpoint_public_access                 = var.cluster_public_access
   cluster_endpoint_private_access                = !var.cluster_public_access
