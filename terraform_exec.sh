@@ -53,7 +53,7 @@ if [ $APPLY == 1 ]; then
     aws eks update-kubeconfig --region $AWS_REGION --name project_eks_cluster-$ENV --kubeconfig "~/.kube/config"
 
     terraform init \
-    -backend-config="bucket=xerris-eks-terraform-state" \
+    -backend-config="bucket=project-terraform-state-${ENV}" \
     -backend-config="key=${ENV}/xerris-eks-apps-bootstrap.tfstate" \
     -backend-config="dynamodb_table=${ENV}-terraform-state-lock-dynamo" \
     -backend-config="region=${AWS_REGION}"
