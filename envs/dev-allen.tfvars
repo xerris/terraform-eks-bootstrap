@@ -32,7 +32,8 @@ create_bastion             = 1
 rds_cluster_name           = "project-eks-rds"
 db_name                    = "projecteksdb"
 db_master_user             = "projecteksmasteruser"
-eks_master_role            = "arn:aws:iam::370365354210:role/aws-reserved/sso.amazonaws.com/AWSReservedSSO_AWSAdministratorAccess_c87e108deaf1b7ca"
+#eks_master_role            = "arn:aws:iam::370365354210:role/aws-reserved/sso.amazonaws.com/AWSReservedSSO_AWSAdministratorAccess_c87e108deaf1b7ca"
+eks_master_role = "arn:aws:iam::370365354210:role/aws-reserved/sso.amazonaws.com/AWSReservedSSO_AWSAdministratorAccess_4722cc25116b9fe5"
 map_roles = [
   #{
   #  rolearn  = "arn:aws:iam::471337104212:role/observability_eks_cluster-dev-K8sFullAdmin"
@@ -48,7 +49,7 @@ map_users = [
     groups   = ["system:masters"]
   },
   {
-    userarn  = "arn:aws:iam::370365354210:user/andres"
+    userarn  = "arn:aws:iam::370365354210:user/allen.azia"
     username = "observability_eks_cluster-dev-K8sFullAdmin"
     groups   = ["system:masters"]
   }
@@ -58,8 +59,10 @@ map_users = [
 
 target_path        = "/overlays"
 github_owner       = "xerris"
-repository_name    = "2048-k8-app"
-branch             = "terraform-eks-boothstrap-branch-allen"
+repository_name    = "kubernetes-addons-bootstrap"
+github_user        = "linozee"
+flux_token         = "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"
+branch             = "main"
 repo_provider      = "github"
 default_components = ["source-controller", "kustomize-controller", "notification-controller"]
 components         = ["helm-controller"]

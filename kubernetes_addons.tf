@@ -92,10 +92,9 @@ module "eks_blueprints_kubernetes_addons" {
     resolve_conflicts = "OVERWRITE"
   }
   cluster_autoscaler_helm_config = {
-    set = [
-      {
-        name  = "extraArgs.expander"
-        value = "priority"
+    set = [{
+      name  = "extraArgs.expander"
+      value = "priority"
       },
       {
         name  = "expanderPriorities"
