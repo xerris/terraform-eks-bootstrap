@@ -82,7 +82,7 @@ if [ $APPLY == 2 ]; then
     -backend-config="key=${ENV}/xerris-eks-apps-bootstrap.tfstate" \
     -backend-config="dynamodb_table=${ENV}-terraform-state-lock-dynamo" \
     -backend-config="region=${AWS_REGION}"
-    terraform destroy --auto-approve -var-file=../envs/${ENV}.tfvars -var="flux_token=${2}" -var="github_user=${3}"
+    #terraform destroy --auto-approve -var-file=../envs/${ENV}.tfvars -var="flux_token=${2}" -var="github_user=${3}"
 
     echo "###############################"
     echo "## Executing terraform destroy ##"
