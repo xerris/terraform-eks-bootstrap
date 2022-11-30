@@ -76,7 +76,7 @@ if [ $APPLY == 2 ]; then
     echo "###############################"
     pushd cicd
     aws eks update-kubeconfig --region $AWS_REGION --name project_eks_cluster-$ENV --kubeconfig "~/.kube/config"
-
+#
     terraform init \
     -backend-config="bucket=project-terraform-state-${ENV}" \
     -backend-config="key=${ENV}/xerris-eks-apps-bootstrap.tfstate" \
