@@ -1,6 +1,10 @@
+
 variable "target_path" {
-  default = "overlays"
+  default = "apps"
 }
+/*variable "target_path" {
+  default = "overlays"
+}*/
 variable "github_owner" {
   default = "xerris"
 }
@@ -10,7 +14,7 @@ variable "repository_name" {
 variable "flux_token" {}
 
 variable "branch" {
-  default = "main"
+  default = "XDP-117-Ginu"
 }
 variable "github_user"{}
 variable "region"{}
