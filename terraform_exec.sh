@@ -75,7 +75,7 @@ if [ $APPLY == 2 ]; then
     echo "## Executing terraform destroy for CI/CD ##"
     echo "###############################"
     pushd cicd
-    aws eks update-kubeconfig --region $AWS_REGION --name observability_eks_cluster-$ENV --kubeconfig "~/.kube/config"
+    aws eks update-kubeconfig --region $AWS_REGION --name project_eks_cluster-$ENV --kubeconfig "~/.kube/config"
 
     terraform init \
     -backend-config="bucket=project-terraform-state-${ENV}" \
