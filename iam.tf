@@ -327,6 +327,7 @@ resource "aws_iam_role_policy_attachment" "default-AmazonEC2ContainerRegistryRea
   role       = aws_iam_role.eks-default-role.name
 }
 
+
 resource "aws_iam_role_policy_attachment" "default-eks-autoscale-policy" {
   policy_arn = aws_iam_policy.eks-autoscale-policy.arn
   role       = aws_iam_role.eks-default-role.name

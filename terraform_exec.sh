@@ -27,7 +27,7 @@ terraform init \
 --upgrade \
 -backend-config="bucket=project-terraform-state-ginu-${ENV}" \
 -backend-config="key=${ENV}/project-eks-bootstrap.tfstate" \
--backend-config="dynamodb_table=${ENV}-project-ginu-terraform-state-lock-dynamo" \
+-backend-config="dynamodb_table=${ENV}-project-ginu1-terraform-state-lock-dynamo" \
 -backend-config="region=${AWS_REGION}"
 export DESTROY=""
 
@@ -53,7 +53,7 @@ if [ $APPLY == 1 ]; then
     terraform init \
     -backend-config="bucket=project-terraform-state-ginu-${ENV}" \
     -backend-config="key=${ENV}/project-eks-bootstrap.tfstate" \
-    -backend-config="dynamodb_table=${ENV}-project-ginu-terraform-state-lock-dynamo" \
+    -backend-config="dynamodb_table=${ENV}-project-ginu1-terraform-state-lock-dynamo" \
     -backend-config="region=${AWS_REGION}"
 
 
@@ -78,7 +78,7 @@ if [ $APPLY == 2 ]; then
     terraform init \
     -backend-config="bucket=project-terraform-state-ginu-${ENV}" \
     -backend-config="key=${ENV}/project-eks-bootstrap.tfstate" \
-    -backend-config="dynamodb_table=${ENV}-project-ginu-terraform-state-lock-dynamo" \
+    -backend-config="dynamodb_table=${ENV}-project-ginu1-terraform-state-lock-dynamo" \
     -backend-config="region=${AWS_REGION}"
     terraform destroy --auto-approve -var-file=../envs/${ENV}.tfvars -var="flux_token=${2}" -var="github_user=${3}"
 
@@ -90,7 +90,7 @@ if [ $APPLY == 2 ]; then
     -upgrade \
     -backend-config="bucket=project-terraform-state-ginu-${ENV}" \
     -backend-config="key=${ENV}/project-eks-bootstrap.tfstate" \
-    -backend-config="dynamodb_table=${ENV}-project-ginu-terraform-state-lock-dynamo" \
+    -backend-config="dynamodb_table=${ENV}-project-ginu1-terraform-state-lock-dynamo" \
     -backend-config="region=${AWS_REGION}"
 
     terraform destroy --auto-approve -var-file=envs/${ENV}.tfvars

@@ -94,7 +94,7 @@ variable "ecr_name" {
 }
 
 variable "eks_cluster_name" {
-  default = "project_eks_cluster_ginu"
+  default = "project_eks_cluster_ginu1"
 }
 
 variable "eks_cluster_version" {
