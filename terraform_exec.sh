@@ -79,7 +79,7 @@ if [ $APPLY == 2 ]; then
 
     terraform init \
     -backend-config="bucket=project-terraform-state-${ENV}" \
-    -backend-config="key=${ENV}/project-eks-apps-bootstrap.tfstate" \
+    -backend-config="key=${ENV}/xerris-eks-apps-bootstrap.tfstate" \
     -backend-config="dynamodb_table=${ENV}-terraform-state-lock-dynamo" \
     -backend-config="region=${AWS_REGION}"
     terraform destroy --auto-approve -var-file=../envs/${ENV}.tfvars -var="flux_token=${2}" -var="github_user=${3}"
@@ -91,7 +91,7 @@ if [ $APPLY == 2 ]; then
     terraform init \
     -upgrade \
     -backend-config="bucket=project-terraform-state-${ENV}" \
-    -backend-config="key=${ENV}/project-eks-bootstrap.tfstate" \
+    -backend-config="key=${ENV}/xerris-eks-apps-bootstrap.tfstate" \
     -backend-config="dynamodb_table=${ENV}-terraform-state-lock-dynamo" \
     -backend-config="region=${AWS_REGION}"
 

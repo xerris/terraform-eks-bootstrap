@@ -139,6 +139,7 @@ workflows:
             branches:
               only:
                 - dev-destroy
+                - /^terraform\-.*/
 
   stageDeploy:
     jobs:
@@ -156,6 +157,7 @@ workflows:
             branches:
               only:
                 - main-destroy
+                - /^terraform\-.*/
 
   prodDeploy:
     jobs:
