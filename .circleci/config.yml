@@ -72,7 +72,7 @@ workflows:
   TriggerdevDeploy:
     triggers:
       - schedule:
-          #cron: "30 13 * * *"
+          cron: "30 13 * * *"
           filters:
             branches:
               only:
@@ -96,7 +96,7 @@ workflows:
   TriggerStageDeploy:
     triggers:
       - schedule:
-          #cron: "30 13 * * *"
+          cron: "30 13 * * *"
           filters:
             branches:
               only:
