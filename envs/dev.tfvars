@@ -34,11 +34,11 @@ db_name = "projecteksdb"
 db_master_user = "projecteksmasteruser"
 eks_master_role = "arn:aws:iam::370365354210:role/aws-reserved/sso.amazonaws.com/AWSReservedSSO_AWSAdministratorAccess_c87e108deaf1b7ca"
 map_roles = [
-  #{
-  #  rolearn  = "arn:aws:iam::471337104212:role/observability_eks_cluster-dev-K8sFullAdmin"
-  #  username = "observability_eks_cluster-dev-K8sFullAdmin"
-  #  groups   = ["system:masters"]
-  #}
+   /*{
+    rolearn  = "arn:aws:iam::471337104212:role/observability_eks_cluster-dev-K8sFullAdmin"
+    username = "observability_eks_cluster-dev-K8sFullAdmin"
+    groups   = ["system:masters"]
+   }*/
   ]
 
 map_users = [
