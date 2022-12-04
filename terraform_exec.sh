@@ -42,7 +42,7 @@ if [ $APPLY == 1 ]; then
     echo "## Executing terraform apply ##"
     echo "###############################"
     terraform apply --auto-approve -var-file=envs/${ENV}.tfvars
-    #exit 0
+    #exi0
     ### CI/CD installation ####
     echo "###############################"
     echo "## installing CI/CD Tool ##"
@@ -50,7 +50,7 @@ if [ $APPLY == 1 ]; then
 
     rm -rf .terraform
     pushd cicd
-    aws eks update-kubeconfig --region $AWS_REGION --name project_eks_cluster-ginu-$ENV --kubeconfig "~/.kube/config"
+    aws eks update-kubeconfig --region $AWS_REGION --name project_eks_cluster_ginu-$ENV --kubeconfig "~/.kube/config"
 
     terraform init \
     -backend-config="bucket=project-terraform-state-ginu3-${ENV}" \
