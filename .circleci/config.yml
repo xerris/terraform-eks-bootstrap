@@ -21,20 +21,23 @@ anchors:
       name: Deploy terraform platform infra
       command: |
         PATH="/home/circleci/.local/bin/:$PATH"
+        ENV=dev
+        AWS_REGION=us-east-1
         source $HOME/.profile
         bash ./terraform_exec.sh 1 $FLUX_TOKEN $GITHUB_USER
-        ENV="${ENV:-dev}"
-        AWS_REGION="${AWS_REGION:-us-east-1}"
+        
+        
 
   destroy-infra: &destroy-infra
     run:
       name: Destroy Kuberntes Apps
       command: |
         PATH="/home/circleci/.local/bin/:$PATH"
+        ENV=dev
+        AWS_REGION=us-east-1
         source $HOME/.profile
         bash ./terraform_exec.sh 2 $FLUX_TOKEN $GITHUB_USER
-        ENV="${ENV:-dev}"
-        AWS_REGION="${AWS_REGION:-us-east-1}"
+        
 
   install-dependencies: &install-dependencies
     run:

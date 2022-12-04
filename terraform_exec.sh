@@ -25,10 +25,12 @@ commit_hash=`git rev-parse --short HEAD`
 #export TF_VAR_build_number="${build_number}"
 terraform init \
 --upgrade \
--backend-config="bucket=project-terraform-state-ginu-${ENV}" \
+-backend-config="bucket=project-terraform-state-ginu3-${ENV}" \
 -backend-config="key=${ENV}/project-eks-bootstrap.tfstate" \
--backend-config="dynamodb_table=${ENV}-project-ginu-terraform-state-lock-dynamo" \
+-backend-config="dynamodb_table=${ENV}-project-ginu4-terraform-state-lock-dynamo" \
 -backend-config="region=${AWS_REGION}"
+ 
+
 export DESTROY=""
 
 terraform validate
@@ -48,12 +50,12 @@ if [ $APPLY == 1 ]; then
 
     rm -rf .terraform
     pushd cicd
-    aws eks update-kubeconfig --region $AWS_REGION --name project_eks_cluster-$ENV --kubeconfig "~/.kube/config"
+    aws eks update-kubeconfig --region $AWS_REGION --name project_eks_cluster-ginu-$ENV --kubeconfig "~/.kube/config"
 
     terraform init \
-    -backend-config="bucket=project-terraform-state-ginu-${ENV}" \
+    -backend-config="bucket=project-terraform-state-ginu3-${ENV}" \
     -backend-config="key=${ENV}/project-eks-bootstrap.tfstate" \
-    -backend-config="dynamodb_table=${ENV}-project-ginu-terraform-state-lock-dynamo" \
+    -backend-config="dynamodb_table=${ENV}-project-ginu4-terraform-state-lock-dynamo" \
     -backend-config="region=${AWS_REGION}"
 
 
@@ -73,12 +75,12 @@ if [ $APPLY == 2 ]; then
     echo "## Executing terraform destroy for CI/CD ##"
     echo "###############################"
     pushd cicd
-    aws eks update-kubeconfig --region $AWS_REGION --name project_eks_cluster_ginu1-$ENV --kubeconfig "~/.kube/config"
+    aws eks update-kubeconfig --region $AWS_REGION --name project_eks_cluster-ginu-$ENV --kubeconfig "~/.kube/config"
 
     terraform init \
-    -backend-config="bucket=project-terraform-state-ginu-${ENV}" \
+    -backend-config="bucket=project-terraform-state-ginu3-${ENV}" \
     -backend-config="key=${ENV}/project-eks-bootstrap.tfstate" \
-    -backend-config="dynamodb_table=${ENV}-project-ginu-terraform-state-lock-dynamo" \
+    -backend-config="dynamodb_table=${ENV}-project-ginu4-terraform-state-lock-dynamo" \
     -backend-config="region=${AWS_REGION}"
     terraform destroy --auto-approve -var-file=../envs/${ENV}.tfvars -var="flux_token=${2}" -var="github_user=${3}"
 
@@ -88,9 +90,9 @@ if [ $APPLY == 2 ]; then
     popd
     terraform init \
     -upgrade \
-    -backend-config="bucket=project-terraform-state-ginu-${ENV}" \
+    -backend-config="bucket=project-terraform-state-ginu3-${ENV}" \
     -backend-config="key=${ENV}/project-eks-bootstrap.tfstate" \
-    -backend-config="dynamodb_table=${ENV}-project-ginu-terraform-state-lock-dynamo" \
+    -backend-config="dynamodb_table=${ENV}-project-ginu4-terraform-state-lock-dynamo" \
     -backend-config="region=${AWS_REGION}"
 
     terraform destroy --auto-approve -var-file=envs/${ENV}.tfvars
