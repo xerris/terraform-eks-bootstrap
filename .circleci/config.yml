@@ -10,6 +10,8 @@ anchors:
     run:
       name: Configure AWS access
       command: |
+        ENV=dev
+        AWS_REGION=us-east-1
         mkdir -p ~/.aws
         file=~/.aws/credentials
         echo "[default]" > $file
