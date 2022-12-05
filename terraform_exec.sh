@@ -48,7 +48,7 @@ if [ $APPLY == 1 ]; then
 
     rm -rf .terraform
     pushd cicd
-    aws eks update-kubeconfig --region $AWS_REGION --name project_eks_cluster-$ENV --kubeconfig "~/.kube/config"
+    aws eks update-kubeconfig --region $AWS_REGION --name xdp101_eks_cluster-$ENV --kubeconfig "~/.kube/config"
 
     terraform init \
     -backend-config="bucket=terraform-xdp-101-eks" \
