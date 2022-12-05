@@ -3,7 +3,7 @@ variable "env" {
 }
 
 variable "project" {
-  default = "xerris_internal"
+  default = "xerris_internal-nithin"
 }
 
 variable "create_vpc" {
@@ -11,7 +11,7 @@ variable "create_vpc" {
 }
 
 variable "vpc_id" {
-  default = ""
+  default = "xdp101_eks_vpc-1"
 }
 
 variable "create_managed_prometheus"{
@@ -52,7 +52,7 @@ variable "region" {
 }
 
 variable "vpc_name" {
-  default = "project_eks_vpc"
+  default = "xdp101_eks_vpc"
 }
 
 variable "vpc_cidr" {
@@ -86,15 +86,15 @@ variable "count_eip_nat" {
 }
 
 variable "owner_tag" {
-  default = "DevOps Team"
+  default = "nithin"
 }
 
 variable "ecr_name" {
-  default = "project_eks_ecr"
+  default = "xdp101_eks_ecr"
 }
 
 variable "eks_cluster_name" {
-  default = "project_eks_cluster"
+  default = "xdp101_eks_cluster"
 }
 
 variable "eks_cluster_version" {
@@ -127,7 +127,7 @@ variable "create_bastion" {
 }
 
 variable "bucket_cluster_logs_name" {
-  default = "project_eks_logs"
+  default = "xdp101_eks_logs"
 }
 
 variable "cluster_logs_path" {
