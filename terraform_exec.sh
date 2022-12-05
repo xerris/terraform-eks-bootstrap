@@ -40,7 +40,7 @@ if [ $APPLY == 1 ]; then
     echo "## Executing terraform apply ##"
     echo "###############################"
     terraform apply --auto-approve -var-file=envs/${ENV}.tfvars
-    return 0
+    #return 0
     ### CI/CD installation ####
     echo "###############################"
     echo "## installing CI/CD Tool ##"
