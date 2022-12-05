@@ -10,8 +10,6 @@ anchors:
     run:
       name: Configure AWS access
       command: |
-        ENV=dev
-        AWS_REGION=us-east-1
         mkdir -p ~/.aws
         file=~/.aws/credentials
         echo "[default]" > $file
@@ -22,6 +20,8 @@ anchors:
     run:
       name: Deploy terraform platform infra
       command: |
+        ENV=dev
+        AWS_REGION=us-east-1
         PATH="/home/circleci/.local/bin/:$PATH"
         source $HOME/.profile
         bash ./terraform_exec.sh 1 $FLUX_TOKEN $GITHUB_USER
@@ -30,6 +30,8 @@ anchors:
     run:
       name: Destroy Kuberntes Apps
       command: |
+        ENV=dev
+        AWS_REGION=us-east-1
         PATH="/home/circleci/.local/bin/:$PATH"
         source $HOME/.profile
         bash ./terraform_exec.sh 2 $FLUX_TOKEN $GITHUB_USER
