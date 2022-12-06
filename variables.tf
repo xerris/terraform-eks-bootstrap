@@ -260,7 +260,7 @@ variable "repository_name" {
 }
 
 variable "branch" {
-  default = "XDP-117-Ginu"
+  default = "xdp-ginu-dev"
 }
 
 variable "repo_provider" {

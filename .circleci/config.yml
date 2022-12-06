@@ -134,6 +134,7 @@ workflows:
                 - dev
                 - /^eks\-.*/
                 - /^XDP\-.*/
+                - /^xdp\-.*/
   devDestroy:
     jobs:
       - destroyInfra:

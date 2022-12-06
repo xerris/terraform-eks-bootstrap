@@ -23,7 +23,7 @@ module "flux_repo_2048_stage"{
     source = "./flux2/flux2_repos"
     repository_name = "2048-k8-app"
     repo_url = "https://github.com/${var.github_owner}/${var.repository_name}"
-    branch = "XDP-117-Ginu"
+    branch = "xdp-ginu-dev"
     target_path = "${var.target_path}/stage"
     flux_token  = var.flux_token
     repo_provider = var.repo_provider
