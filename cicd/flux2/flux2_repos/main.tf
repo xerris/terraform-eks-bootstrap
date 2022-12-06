@@ -88,7 +88,8 @@ resource "kubectl_manifest" "sync" {
 resource "kubernetes_secret" "main" {
   count      = local.flux2["enabled"] ? 1 : 0
   metadata {
-    name      = "ap-${data.flux_sync.main[0].secret}"
+    name = "flux-secret"
+   # name      = data.flux_sync.main[0].secret
     namespace = data.flux_sync.main[0].namespace
   }
 
