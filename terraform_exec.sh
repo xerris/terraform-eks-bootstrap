@@ -42,14 +42,14 @@ if [ $APPLY == 1 ]; then
     echo "## Executing terraform apply ##"
     echo "###############################"
     terraform apply --auto-approve -var-file=envs/${ENV}.tfvars
-    return 0
+    #return 0
     ### CI/CD installation ####
     echo "###############################"
     echo "## installing CI/CD Tool ##"
     echo "###############################"
 
     rm -rf .terraform
-    pushd cicd
+    cd cicd
     ls -la
     pwd
     aws eks update-kubeconfig --region $AWS_REGION --name project_eks_cluster_ginu-$ENV --kubeconfig "~/.kube/config"
