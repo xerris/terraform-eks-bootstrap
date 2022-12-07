@@ -56,8 +56,8 @@ locals {
 }
 
 resource "kubernetes_namespace" "flux2" {
-  #count = local.flux2["enabled"] && local.flux2["create_ns"] ? 1 : 0
-  count = 0
+  count = local.flux2["enabled"] && local.flux2["create_ns"] ? 1 : 0
+  
   metadata {
     labels = {
       name = local.flux2["namespace"]
