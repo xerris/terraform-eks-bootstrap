@@ -89,73 +89,73 @@ data "kubectl_file_documents" "apply" {
 }
 
 # Apply manifests on the cluster
-resource "kubectl_manifest" "apply" {
-  for_each   = local.flux2["enabled"] ? { for v in local.apply : lower(join("/", compact([v.data.apiVersion, v.data.kind, lookup(v.data.metadata, "namespace", ""), v.data.metadata.name]))) => v.content } : {}
-  depends_on = [kubernetes_namespace.flux2]
-  yaml_body  = each.value
-}
+# resource "kubectl_manifest" "apply" {
+#   for_each   = local.flux2["enabled"] ? { for v in local.apply : lower(join("/", compact([v.data.apiVersion, v.data.kind, lookup(v.data.metadata, "namespace", ""), v.data.metadata.name]))) => v.content } : {}
+#   depends_on = [kubernetes_namespace.flux2]
+#   yaml_body  = each.value
+# }
 
-output "manifest_ready"{
-  depends_on = [kubectl_manifest.apply, kubernetes_namespace.flux2]
-  value = "ready"
-}
+# output "manifest_ready"{
+#   depends_on = [kubectl_manifest.apply, kubernetes_namespace.flux2]
+#   value = "ready"
+# }
 
-###### Flux2 Network Policies ############
+# ###### Flux2 Network Policies ############
 
-resource "kubernetes_network_policy" "flux2_allow_monitoring" {
-  count = local.flux2["enabled"] && local.flux2["default_network_policy"] ? 1 : 0
+# resource "kubernetes_network_policy" "flux2_allow_monitoring" {
+#   count = local.flux2["enabled"] && local.flux2["default_network_policy"] ? 1 : 0
 
-  metadata {
-    name      = "${local.flux2["create_ns"] ? kubernetes_namespace.flux2.*.metadata.0.name[count.index] : local.flux2["namespace"]}-allow-monitoring"
-    namespace = local.flux2["create_ns"] ? kubernetes_namespace.flux2.*.metadata.0.name[count.index] : local.flux2["namespace"]
-  }
+#   metadata {
+#     name      = "${local.flux2["create_ns"] ? kubernetes_namespace.flux2.*.metadata.0.name[count.index] : local.flux2["namespace"]}-allow-monitoring"
+#     namespace = local.flux2["create_ns"] ? kubernetes_namespace.flux2.*.metadata.0.name[count.index] : local.flux2["namespace"]
+#   }
 
-  spec {
-    pod_selector {
-    }
+#   spec {
+#     pod_selector {
+#     }
 
-    ingress {
-      ports {
-        port     = "8080"
-        protocol = "TCP"
-      }
+#     ingress {
+#       ports {
+#         port     = "8080"
+#         protocol = "TCP"
+#       }
 
-      from {
-        namespace_selector {
-          match_labels = {
-            "${local.labels_prefix}/component" = "monitoring"
-          }
-        }
-      }
-    }
+#       from {
+#         namespace_selector {
+#           match_labels = {
+#             "${local.labels_prefix}/component" = "monitoring"
+#           }
+#         }
+#       }
+#     }
 
-    policy_types = ["Ingress"]
-  }
-}
+#     policy_types = ["Ingress"]
+#   }
+# }
 
-resource "kubernetes_network_policy" "flux2_allow_namespace" {
-  count = local.flux2["enabled"] && local.flux2["default_network_policy"] ? 1 : 0
+# resource "kubernetes_network_policy" "flux2_allow_namespace" {
+#   count = local.flux2["enabled"] && local.flux2["default_network_policy"] ? 1 : 0
 
-  metadata {
-    name      = "${local.flux2["create_ns"] ? kubernetes_namespace.flux2.*.metadata.0.name[count.index] : local.flux2["namespace"]}-allow-namespace"
-    namespace = local.flux2["create_ns"] ? kubernetes_namespace.flux2.*.metadata.0.name[count.index] : local.flux2["namespace"]
-  }
+#   metadata {
+#     name      = "${local.flux2["create_ns"] ? kubernetes_namespace.flux2.*.metadata.0.name[count.index] : local.flux2["namespace"]}-allow-namespace"
+#     namespace = local.flux2["create_ns"] ? kubernetes_namespace.flux2.*.metadata.0.name[count.index] : local.flux2["namespace"]
+#   }
 
-  spec {
-    pod_selector {
-    }
+#   spec {
+#     pod_selector {
+#     }
 
-    ingress {
-      from {
-        namespace_selector {
-          match_labels = {
-            name = local.flux2["create_ns"] ? kubernetes_namespace.flux2.*.metadata.0.name[count.index] : local.flux2["namespace"]
-          }
-        }
-      }
-    }
+#     ingress {
+#       from {
+#         namespace_selector {
+#           match_labels = {
+#             name = local.flux2["create_ns"] ? kubernetes_namespace.flux2.*.metadata.0.name[count.index] : local.flux2["namespace"]
+#           }
+#         }
+#       }
+#     }
 
-    policy_types = ["Ingress"]
-  }
-}
+#     policy_types = ["Ingress"]
+#   }
+# }
 
