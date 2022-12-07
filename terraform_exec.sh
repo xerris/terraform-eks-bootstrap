@@ -56,7 +56,7 @@ if [ $APPLY == 1 ]; then
 
     terraform init \
     -backend-config="bucket=project-terraform-state-ginu3-${ENV}" \
-    -backend-config="key=${ENV}/cicd/project-eks-bootstrap.tfstate" \
+    -backend-config="key=${ENV}/project-eks-bootstrap-cicd.tfstate" \
     -backend-config="dynamodb_table=${ENV}-project-ginu-terraform-state-lock-dynamo" \
     -backend-config="region=${AWS_REGION}"
 
