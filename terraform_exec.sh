@@ -54,8 +54,7 @@ if [ $APPLY == 1 ]; then
     pwd
     aws eks update-kubeconfig --region $AWS_REGION --name project_eks_cluster_ginu-$ENV --kubeconfig "~/.kube/config"
     kubectl get ns
-    kubectl delete ns flux2-system
-    kubectl get ns
+    
 
     terraform init \
     -backend-config="bucket=project-terraform-state-ginu3-${ENV}" \
