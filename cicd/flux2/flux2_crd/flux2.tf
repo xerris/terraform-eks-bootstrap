@@ -56,8 +56,8 @@ locals {
 }
 
 resource "kubernetes_namespace" "flux2" {
-  count = local.flux2["enabled"] && local.flux2["create_ns"] ? 1 : 0
-
+  #count = local.flux2["enabled"] && local.flux2["create_ns"] ? 1 : 0
+  count = 0
   metadata {
     labels = {
       name = local.flux2["namespace"]
@@ -96,7 +96,9 @@ resource "kubectl_manifest" "apply" {
 }
 
 output "manifest_ready"{
-  depends_on = [kubectl_manifest.apply, kubernetes_namespace.flux2]
+  depends_on = [kubectl_manifest.apply, 
+  #kubernetes_namespace.flux2
+  ]
   value = "ready"
 }
 
