@@ -53,7 +53,9 @@ if [ $APPLY == 1 ]; then
     ls -la
     pwd
     aws eks update-kubeconfig --region $AWS_REGION --name project_eks_cluster_ginu-$ENV --kubeconfig "~/.kube/config"
-
+    kubectl get ns
+    kubectl get secret -A
+    
     terraform init \
     -backend-config="bucket=project-terraform-state-ginu3-${ENV}" \
     -backend-config="key=${ENV}/project-eks-bootstrap-cicd.tfstate" \
