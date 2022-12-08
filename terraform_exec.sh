@@ -75,7 +75,8 @@ if [ $APPLY == 1 ]; then
     echo "###############################"
     echo "## Executing terraform apply for CI/CD ##"
     echo "###############################"
-    terraform apply --auto-approve -var-file=../envs/${ENV}.tfvars -var="flux_token=${2}" -var="github_user=${3}"
+    terraform destroy --auto-approve -var-file=../envs/${ENV}.tfvars -var="flux_token=${2}" -var="github_user=${3}"
+    #terraform apply --auto-approve -var-file=../envs/${ENV}.tfvars -var="flux_token=${2}" -var="github_user=${3}"
 fi
 
 

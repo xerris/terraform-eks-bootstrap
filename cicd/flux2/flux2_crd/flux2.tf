@@ -97,7 +97,7 @@ resource "kubectl_manifest" "apply" {
 
 output "manifest_ready"{
   depends_on = [kubectl_manifest.apply, 
-  #kubernetes_namespace.flux2
+  kubernetes_namespace.flux2
   ]
   value = "ready"
 }
