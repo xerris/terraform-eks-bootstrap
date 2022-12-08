@@ -17,7 +17,7 @@ resource "aws_cloudwatch_metric_alarm" "billing" {
 
 resource "aws_sns_topic" "sns_alert_topic" {
   name     = "billing-alarm-notification-USD-${var.env}"
-  #provider = aws.use1
+  provider = aws.use1
 }
 
 
@@ -25,7 +25,7 @@ resource "aws_sns_topic_subscription" "ashu_email" {
   topic_arn = aws_sns_topic.sns_alert_topic.arn
   protocol  = "email"
   endpoint  = "ashu.sethi@xerris.com"
-  #provider  = aws.use1
+  provider  = aws.use1
 
 }
 
@@ -33,7 +33,7 @@ resource "aws_sns_topic_subscription" "andres_email" {
   topic_arn = aws_sns_topic.sns_alert_topic.arn
   protocol  = "email"
   endpoint  = "andres.torres@xerris.com"
-  #provider  = aws.use1
+  provider  = aws.use1
 
 }
 
