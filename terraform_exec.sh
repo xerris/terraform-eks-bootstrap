@@ -63,9 +63,9 @@ if [ $APPLY == 1 ]; then
     -backend-config="dynamodb_table=${ENV}-project-ginu0-terraform-state-lock-dynamo" \
     -backend-config="region=${AWS_REGION}"
 
-    terraform import -var-file=../envs/dev.tfvars -var="flux_token=${2}" -var="github_user=${3}" module.flux2_crd.kubernetes_namespace.flux2 flux2-system
-    terraform import -var-file=../envs/dev.tfvars -var="flux_token=${2}" -var="github_user=${3}" module.flux_repo_2048_stage.kubernetes_secret.main 2048-k8-app-xdp-ginu-dev-secret
-    terraform import -var-file=../envs/dev.tfvars -var="flux_token=${2}" -var="github_user=${3}" module.flux_repo_addons.kubernetes_secret.main kubernetes-addons-bootstrap-dev-secret
+    terraform import -var-file=../envs/dev.tfvars -lock=false -var="flux_token=${2}" -var="github_user=${3}" module.flux2_crd.kubernetes_namespace.flux2 flux2-system
+    terraform import -var-file=../envs/dev.tfvars -lock=false -var="flux_token=${2}" -var="github_user=${3}" module.flux_repo_2048_stage.kubernetes_secret.main 2048-k8-app-xdp-ginu-dev-secret
+    terraform import -var-file=../envs/dev.tfvars -lock=false -var="flux_token=${2}" -var="github_user=${3}" module.flux_repo_addons.kubernetes_secret.main kubernetes-addons-bootstrap-dev-secret
 
 
     terraform validate
