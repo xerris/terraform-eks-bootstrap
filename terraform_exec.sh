@@ -27,7 +27,7 @@ terraform init \
 --upgrade \
 -backend-config="bucket=project-terraform-state-ginu3-${ENV}" \
 -backend-config="key=${ENV}/project-eks-bootstrap.tfstate" \
--backend-config="dynamodb_table=${ENV}-project-ginu0-terraform-state-lock-dynamo" \
+-backend-config="dynamodb_table=${ENV}-project-ginu5-terraform-state-lock-dynamo" \
 -backend-config="region=${AWS_REGION}"
  
 
@@ -60,7 +60,7 @@ if [ $APPLY == 1 ]; then
     terraform init \
     -backend-config="bucket=project-terraform-state-ginu3-${ENV}" \
     -backend-config="key=${ENV}/project-eks-bootstrap-cicd.tfstate" \
-    -backend-config="dynamodb_table=${ENV}-project-ginu0-terraform-state-lock-dynamo" \
+    -backend-config="dynamodb_table=${ENV}-project-ginu5-terraform-state-lock-dynamo" \
     -backend-config="region=${AWS_REGION}"
 
     # terraform import -var-file=../envs/dev.tfvars -lock=false -var="flux_token=${2}" -var="github_user=${3}" module.flux2_crd.kubernetes_namespace.flux2 flux2-system
@@ -89,7 +89,7 @@ if [ $APPLY == 2 ]; then
     terraform init \
     -backend-config="bucket=project-terraform-state-ginu3-${ENV}" \
     -backend-config="key=${ENV}/project-eks-bootstrap.tfstate" \
-    -backend-config="dynamodb_table=${ENV}-project-ginu0-terraform-state-lock-dynamo" \
+    -backend-config="dynamodb_table=${ENV}-project-ginu5-terraform-state-lock-dynamo" \
     -backend-config="region=${AWS_REGION}"
     terraform destroy --auto-approve -var-file=../envs/${ENV}.tfvars -var="flux_token=${2}" -var="github_user=${3}"
 
@@ -101,7 +101,7 @@ if [ $APPLY == 2 ]; then
     -upgrade \
     -backend-config="bucket=project-terraform-state-ginu3-${ENV}" \
     -backend-config="key=${ENV}/project-eks-bootstrap.tfstate" \
-    -backend-config="dynamodb_table=${ENV}-project-ginu0-terraform-state-lock-dynamo" \
+    -backend-config="dynamodb_table=${ENV}-project-ginu5-terraform-state-lock-dynamo" \
     -backend-config="region=${AWS_REGION}"
 
     terraform destroy --auto-approve -var-file=envs/${ENV}.tfvars
