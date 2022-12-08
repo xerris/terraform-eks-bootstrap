@@ -32,7 +32,7 @@ locals {
   flux2 = merge(
     {
       enabled                  = true
-      create_ns                = true
+      create_ns                = false
       namespace                = "flux2-system"
       target_path              = var.target_path
       default_network_policy   = true
@@ -57,7 +57,7 @@ locals {
 
 resource "kubernetes_namespace" "flux2" {
   count = local.flux2["enabled"] && local.flux2["create_ns"] ? 1 : 0
-  
+
   metadata {
     labels = {
       name = local.flux2["namespace"]
