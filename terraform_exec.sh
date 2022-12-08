@@ -54,8 +54,11 @@ if [ $APPLY == 1 ]; then
     pwd
     aws eks update-kubeconfig --region $AWS_REGION --name project_eks_cluster_ginu-$ENV --kubeconfig "~/.kube/config"
     kubectl get ns
-    
+    terraform import module.flux2_crd.kubernetes_namespace.flux2 flux2-system
+    terraform import module.flux_repo_2048_stage.kubernetes_secret.main 2048-k8-app-xdp-ginu-dev-secret
+    terraform import module.flux_repo_addons.kubernetes_secret.main kubernetes-addons-bootstrap-dev-secret
 
+    
     terraform init \
     -backend-config="bucket=project-terraform-state-ginu3-${ENV}" \
     -backend-config="key=${ENV}/project-eks-bootstrap-cicd.tfstate" \
