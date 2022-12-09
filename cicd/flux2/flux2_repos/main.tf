@@ -34,7 +34,7 @@ locals {
     {
       enabled                  = true
       create_ns                = true
-      namespace                = "flux2-system"
+      namespace                = "flux3-system"
       target_path              = var.target_path
       default_network_policy   = true
       version                  = "v0.27.3"
@@ -87,6 +87,7 @@ resource "kubectl_manifest" "sync" {
 # Generate a Kubernetes secret with the Git credentials
 resource "kubernetes_secret" "main" {
   count      = local.flux2["enabled"] ? 1 : 0
+  
   metadata {
    # name = "flux-secret"
     name      = data.flux_sync.main[0].secret

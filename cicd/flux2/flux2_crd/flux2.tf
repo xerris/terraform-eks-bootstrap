@@ -33,7 +33,7 @@ locals {
     {
       enabled                  = true
       create_ns                = true
-      namespace                = "flux2-system"
+      namespace                = "flux3-system"
       target_path              = var.target_path
       default_network_policy   = true
       version                  = "v0.27.3"
@@ -133,11 +133,12 @@ resource "kubernetes_network_policy" "flux2_allow_monitoring" {
 
     policy_types = ["Ingress"]
   }
+  depends_on = [kubernetes_namespace.flux2]
 }
 
 resource "kubernetes_network_policy" "flux2_allow_namespace" {
   count = local.flux2["enabled"] && local.flux2["default_network_policy"] ? 1 : 0
-
+  depends_on = [kubernetes_namespace.flux2]
   metadata {
     name      = "${local.flux2["create_ns"] ? kubernetes_namespace.flux2.*.metadata.0.name[count.index] : local.flux2["namespace"]}-allow-namespace"
     namespace = local.flux2["create_ns"] ? kubernetes_namespace.flux2.*.metadata.0.name[count.index] : local.flux2["namespace"]
