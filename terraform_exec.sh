@@ -67,7 +67,7 @@ if [ $APPLY == 1 ]; then
     # terraform import -var-file=../envs/dev.tfvars -lock=false -var="flux_token=${2}" -var="github_user=${3}" module.flux_repo_2048_stage.kubernetes_secret.main flux2-system/2048-k8-app-xdp-ginu-dev-secret
     # terraform import -var-file=../envs/dev.tfvars -lock=false -var="flux_token=${2}" -var="github_user=${3}" module.flux_repo_addons.kubernetes_secret.main flux2-system/kubernetes-addons-bootstrap-dev-secret
 
-    terraform state rm module.flux2_crd.kubernetes_namespace.flux2
+    #terraform state rm module.flux2_crd.kubernetes_namespace.flux2
     terraform validate
 
     terraform plan -var-file=../envs/${ENV}.tfvars -var="flux_token=${2}" -var="github_user=${3}"
