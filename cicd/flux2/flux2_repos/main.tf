@@ -34,7 +34,7 @@ locals {
     {
       enabled                  = true
       create_ns                = true
-      namespace                = "flux3-system"
+      namespace                = "flux2-system"
       target_path              = var.target_path
       default_network_policy   = true
       version                  = "v0.27.3"
