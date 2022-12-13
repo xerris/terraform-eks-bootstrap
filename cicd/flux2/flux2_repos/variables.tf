@@ -10,7 +10,7 @@ variable "repository_name" {
 variable "flux_token" {}
 
 variable "branch" {
-  default = "main"
+  default = "xdp-ginu-dev"
 }
 variable "github_user"{}
 variable "region"{}

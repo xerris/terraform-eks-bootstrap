@@ -25,10 +25,12 @@ commit_hash=`git rev-parse --short HEAD`
 #export TF_VAR_build_number="${build_number}"
 terraform init \
 --upgrade \
--backend-config="bucket=xerris-eks-terraform-state" \
--backend-config="key=${ENV}/xerris-eks-bootstrap.tfstate" \
--backend-config="dynamodb_table=${ENV}-xerris-eks-terraform-state-lock-dynamo" \
+-backend-config="bucket=project-terraform-state-ginu3-${ENV}" \
+-backend-config="key=${ENV}/project-eks-bootstrap.tfstate" \
+-backend-config="dynamodb_table=${ENV}-project-ginu5-terraform-state-lock-dynamo" \
 -backend-config="region=${AWS_REGION}"
+ 
+
 export DESTROY=""
 
 terraform validate
@@ -40,23 +42,32 @@ if [ $APPLY == 1 ]; then
     echo "## Executing terraform apply ##"
     echo "###############################"
     terraform apply --auto-approve -var-file=envs/${ENV}.tfvars
-    return 0
+    #return 0
     ### CI/CD installation ####
     echo "###############################"
     echo "## installing CI/CD Tool ##"
     echo "###############################"
 
     rm -rf .terraform
-    pushd cicd
-    aws eks update-kubeconfig --region $AWS_REGION --name project_eks_cluster-$ENV --kubeconfig "~/.kube/config"
+    cd cicd
+    ls -la
+    pwd
+    aws eks update-kubeconfig --region $AWS_REGION --name project_eks_cluster_ginu-$ENV --kubeconfig "~/.kube/config"
+    kubectl get ns
+    
 
+    
     terraform init \
-    -backend-config="bucket=xerris-eks-terraform-state" \
-    -backend-config="key=${ENV}/xerris-eks-apps-bootstrap.tfstate" \
-    -backend-config="dynamodb_table=${ENV}-xerris-eks-terraform-state-lock-dynamo" \
+    -backend-config="bucket=project-terraform-state-ginu3-${ENV}" \
+    -backend-config="key=${ENV}/project-eks-bootstrap-cicd.tfstate" \
+    -backend-config="dynamodb_table=${ENV}-project-ginu5-terraform-state-lock-dynamo" \
     -backend-config="region=${AWS_REGION}"
 
+    # terraform import -var-file=../envs/dev.tfvars -lock=false -var="flux_token=${2}" -var="github_user=${3}" module.flux2_crd.kubernetes_namespace.flux2 flux2-system
+    # terraform import -var-file=../envs/dev.tfvars -lock=false -var="flux_token=${2}" -var="github_user=${3}" module.flux_repo_2048_stage.kubernetes_secret.main flux2-system/2048-k8-app-xdp-ginu-dev-secret
+    # terraform import -var-file=../envs/dev.tfvars -lock=false -var="flux_token=${2}" -var="github_user=${3}" module.flux_repo_addons.kubernetes_secret.main flux2-system/kubernetes-addons-bootstrap-dev-secret
 
+    #terraform state rm module.flux2_crd.kubernetes_namespace.flux2
     terraform validate
 
     terraform plan -var-file=../envs/${ENV}.tfvars -var="flux_token=${2}" -var="github_user=${3}"
@@ -64,6 +75,7 @@ if [ $APPLY == 1 ]; then
     echo "###############################"
     echo "## Executing terraform apply for CI/CD ##"
     echo "###############################"
+    #terraform destroy --auto-approve -var-file=../envs/${ENV}.tfvars -var="flux_token=${2}" -var="github_user=${3}"
     terraform apply --auto-approve -var-file=../envs/${ENV}.tfvars -var="flux_token=${2}" -var="github_user=${3}"
 fi
 
@@ -73,12 +85,12 @@ if [ $APPLY == 2 ]; then
     echo "## Executing terraform destroy for CI/CD ##"
     echo "###############################"
     pushd cicd
-    aws eks update-kubeconfig --region $AWS_REGION --name observability_eks_cluster-$ENV --kubeconfig "~/.kube/config"
+    aws eks update-kubeconfig --region $AWS_REGION --name project_eks_cluster-ginu-$ENV --kubeconfig "~/.kube/config"
 
     terraform init \
-    -backend-config="bucket=project-eks-terraform-state" \
-    -backend-config="key=${ENV}/project-eks-apps-bootstrap.tfstate" \
-    -backend-config="dynamodb_table=${ENV}-project-eks-terraform-state-lock-dynamo" \
+    -backend-config="bucket=project-terraform-state-ginu3-${ENV}" \
+    -backend-config="key=${ENV}/project-eks-bootstrap.tfstate" \
+    -backend-config="dynamodb_table=${ENV}-project-ginu5-terraform-state-lock-dynamo" \
     -backend-config="region=${AWS_REGION}"
     terraform destroy --auto-approve -var-file=../envs/${ENV}.tfvars -var="flux_token=${2}" -var="github_user=${3}"
 
@@ -88,9 +100,9 @@ if [ $APPLY == 2 ]; then
     popd
     terraform init \
     -upgrade \
-    -backend-config="bucket=project-eks-terraform-state" \
+    -backend-config="bucket=project-terraform-state-ginu3-${ENV}" \
     -backend-config="key=${ENV}/project-eks-bootstrap.tfstate" \
-    -backend-config="dynamodb_table=${ENV}-project-eks-terraform-state-lock-dynamo" \
+    -backend-config="dynamodb_table=${ENV}-project-ginu5-terraform-state-lock-dynamo" \
     -backend-config="region=${AWS_REGION}"
 
     terraform destroy --auto-approve -var-file=envs/${ENV}.tfvars

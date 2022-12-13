@@ -20,12 +20,12 @@ variable "github_owner" {
 variable "github_user"{}
 
 variable "repository_name" {
-  default = "terraform-eks-apps-bootstrap"
+  default = "terraform-eks-apps-bootstrap-ginu"
 }
 variable "flux_token" {}
 
 variable "branch" {
-  default = "dev"
+  default = "xdp-ginu-dev"
 }
 
 variable "repo_provider" {

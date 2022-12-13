@@ -1,7 +1,7 @@
 env = "dev"
 create_vpc = true
 region = "us-east-1"
-vpc_name = "project_eks_vpc"
+vpc_name = "project_eks_vpc_Ginu"
 vpc_cidr = "10.1.0.0/16"
 project = "xerris"
 #vpc_id   = "vpc-088c6886a69f9c128"
@@ -14,9 +14,9 @@ public_subnets = ["10.1.3.0/24","10.1.4.0/24"]
 enable_natgateway = true
 enable_vpngateway = false
 count_eip_nat = 1
-owner_tag = "Xerris DevOps Team"
-ecr_name = "project_eks_ecr"
-eks_cluster_name = "project_eks_cluster"
+owner_tag = "Ginu"
+ecr_name = "project_eks_ecr_ginu"
+eks_cluster_name = "project_eks_cluster_ginu"
 eks_cluster_version  = "1.23"
 cluster_min_node_count = 1
 cluster_max_node_count = 3
@@ -34,11 +34,11 @@ db_name = "projecteksdb"
 db_master_user = "projecteksmasteruser"
 eks_master_role = "arn:aws:iam::370365354210:role/aws-reserved/sso.amazonaws.com/AWSReservedSSO_AWSAdministratorAccess_c87e108deaf1b7ca"
 map_roles = [
-  #{
-  #  rolearn  = "arn:aws:iam::471337104212:role/observability_eks_cluster-dev-K8sFullAdmin"
-  #  username = "observability_eks_cluster-dev-K8sFullAdmin"
-  #  groups   = ["system:masters"]
-  #}
+   /*{
+    rolearn  = "arn:aws:iam::471337104212:role/observability_eks_cluster-dev-K8sFullAdmin"
+    username = "observability_eks_cluster-dev-K8sFullAdmin"
+    groups   = ["system:masters"]
+   }*/
   ]
 
 map_users = [

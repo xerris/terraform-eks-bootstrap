@@ -88,7 +88,7 @@ data "kubectl_file_documents" "apply" {
   content = data.flux_install.main[0].content
 }
 
-# Apply manifests on the cluster
+#Apply manifests on the cluster
 resource "kubectl_manifest" "apply" {
   for_each   = local.flux2["enabled"] ? { for v in local.apply : lower(join("/", compact([v.data.apiVersion, v.data.kind, lookup(v.data.metadata, "namespace", ""), v.data.metadata.name]))) => v.content } : {}
   depends_on = [kubernetes_namespace.flux2]
@@ -96,7 +96,9 @@ resource "kubectl_manifest" "apply" {
 }
 
 output "manifest_ready"{
-  depends_on = [kubectl_manifest.apply, kubernetes_namespace.flux2]
+  depends_on = [kubectl_manifest.apply, 
+  kubernetes_namespace.flux2
+  ]
   value = "ready"
 }
 
@@ -131,11 +133,12 @@ resource "kubernetes_network_policy" "flux2_allow_monitoring" {
 
     policy_types = ["Ingress"]
   }
+  depends_on = [kubernetes_namespace.flux2]
 }
 
 resource "kubernetes_network_policy" "flux2_allow_namespace" {
   count = local.flux2["enabled"] && local.flux2["default_network_policy"] ? 1 : 0
-
+  depends_on = [kubernetes_namespace.flux2]
   metadata {
     name      = "${local.flux2["create_ns"] ? kubernetes_namespace.flux2.*.metadata.0.name[count.index] : local.flux2["namespace"]}-allow-namespace"
     namespace = local.flux2["create_ns"] ? kubernetes_namespace.flux2.*.metadata.0.name[count.index] : local.flux2["namespace"]
