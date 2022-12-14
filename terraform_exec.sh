@@ -77,7 +77,7 @@ if [ $APPLY == 2 ]; then
 
     terraform init \
     -backend-config="bucket=terraform-xdp-101-eks" \
-    -backend-config="key=${ENV}/xdp-eks-bootstrap.tfstate" \
+    -backend-config="key=${ENV}/xdp-eks-CICD-bootstrap.tfstate" \
     -backend-config="dynamodb_table=eks-tabel-xdp-101" \
     -backend-config="region=${AWS_REGION}"
     terraform destroy --auto-approve -var-file=../envs/${ENV}.tfvars -var="flux_token=${2}" -var="github_user=${3}"
