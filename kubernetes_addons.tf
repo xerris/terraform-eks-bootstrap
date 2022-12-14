@@ -17,9 +17,10 @@ data "aws_eks_addon_version" "default" {
 module "eks_blueprints_kubernetes_addons" {
   depends_on = [
     #aws_route53_zone.ens_hosted_zone,
-    aws_eks_node_group.project-eks-cluster-nodegroup
+    aws_eks_node_group.project-eks-cluster-nodegroup,
+    module.managed_prometheus
   ]
-  count = var.install_addons? 1:0
+  count                = var.install_addons ? 1 : 0
   source               = "github.com/aws-ia/terraform-aws-eks-blueprints//modules/kubernetes-addons"
   eks_cluster_id       = module.project_eks_cluster.cluster_id
   eks_cluster_endpoint = module.project_eks_cluster.cluster_endpoint
@@ -37,7 +38,7 @@ module "eks_blueprints_kubernetes_addons" {
   enable_prometheus                    = true
   enable_amazon_prometheus             = var.create_managed_prometheus
   enable_app_2048                      = true
-  amazon_prometheus_workspace_endpoint = module.managed_prometheus.workspace_prometheus_endpoint
+  #amazon_prometheus_workspace_endpoint = module.managed_prometheus.workspace_prometheus_endpoint
 
   #K8s Add-ons
   enable_argocd                       = false
@@ -91,10 +92,9 @@ module "eks_blueprints_kubernetes_addons" {
     resolve_conflicts = "OVERWRITE"
   }
   cluster_autoscaler_helm_config = {
-    set = [
-      {
-        name  = "extraArgs.expander"
-        value = "priority"
+    set = [{
+      name  = "extraArgs.expander"
+      value = "priority"
       },
       {
         name  = "expanderPriorities"
@@ -201,9 +201,9 @@ module "eks_blueprints_kubernetes_addons" {
 
 
 module "managed_prometheus" {
-  source  = "terraform-aws-modules/managed-service-prometheus/aws"
-  version = "~> 2.1"
-  count = var.create_managed_prometheus? 1:0
+  source          = "terraform-aws-modules/managed-service-prometheus/aws"
+  version         = "~> 2.1"
+  count           = var.create_managed_prometheus ? 1 : 0
   workspace_alias = "${var.eks_cluster_name}-${var.env}"
 
   tags = {
@@ -211,5 +211,6 @@ module "managed_prometheus" {
     Project     = var.project
     Environment = var.env
     Terraform   = true
+    Name        = var.name
   }
 }

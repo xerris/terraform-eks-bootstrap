@@ -29,6 +29,7 @@ module "vpc" {
     Project     = var.project
     Environment = var.env
     Terraform   = true
+    Name        = var.name
   }
 }
 /*

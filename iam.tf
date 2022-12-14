@@ -115,8 +115,8 @@ resource "aws_iam_role" "eks-external-dns-role" {
       Action = "sts:AssumeRoleWithWebIdentity"
       Effect = "Allow"
       Principal = {
-        "Federated" : module.project_eks_cluster.oidc_provider_arn
-        #Service = "ec2.amazonaws.com"
+        #"Federated" : module.project_eks_cluster.oidc_provider_arn
+        Service = "ec2.amazonaws.com"
       }
     }]
     Version = "2012-10-17"
@@ -288,9 +288,9 @@ resource "aws_iam_role" "eks-default-role" {
       Effect = "Allow"
       Principal = {
         Service = [
-					"eks-nodegroup.amazonaws.com",
+          "eks-nodegroup.amazonaws.com",
           "ec2.amazonaws.com"
-				]
+        ]
       }
     }]
     Version = "2012-10-17"
