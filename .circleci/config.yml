@@ -77,7 +77,7 @@ workflows:
             branches:
               only:
                 - dev
-                #- terraform-eks-boothstrap-branch-allen
+                - terraform-eks-boothstrap-branch-allen
     jobs:
       - deployInfra:
           context: xerris-dev-2
@@ -103,7 +103,7 @@ workflows:
             branches:
               only:
                 - main
-                #- terraform-eks-boothstrap-branch-allen
+                - terraform-eks-boothstrap-branch-allen
     jobs:
       - deployInfra:
           context: xerris-staging-2
@@ -130,7 +130,7 @@ workflows:
                 - dev
                 - /^eks\-.*/
                 - /^XDP\-.*/
-                #- /^terraform\-.*/
+                - /^terraform\-.*/
   devDestroy:
     jobs:
       - destroyInfra:
@@ -139,7 +139,7 @@ workflows:
             branches:
               only:
                 - dev-destroy
-                - /^terraform\-.*/
+                #- /^terraform\-.*/
 
   stageDeploy:
     jobs:
